@@ -14,8 +14,6 @@ namespace TestPro
 {
     static class DBConnect
     {
-        public static string strSQL;
-        //public static SqlConnection cn = null;
         public static SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["NAKADB"].ConnectionString);
         public static SqlCommand cd = null;
 
@@ -27,8 +25,6 @@ namespace TestPro
         public static void DBConnect_Main()
         {
 
-
-
             // 接続文字列の取得
             var connectionString = ConfigurationManager.ConnectionStrings["NAKADB"].ConnectionString;
             
@@ -39,35 +35,12 @@ namespace TestPro
                 // データベースの接続開始
                 cn.Open();
 
-//                // 実行するSQLの準備
-//                strSQL = @"
-//                 SELECT
-//                   *
-//                 FROM
-//                   ORDER_TBL
-//                ";
-
-                //cd = new SqlCommand(strSQL, cn);
-                //SqlDataReader drReader = cd.ExecuteReader();
-
-
-
-
-                //drReader.Close();
-
-
-
-
-
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
                 throw;
             }
-          
-
-
         }
 
         //////////////////////////////////////////////////
@@ -81,24 +54,8 @@ namespace TestPro
                 //cn.Dispose();
                 cn.Close();
             }
-
-
         }
-
-
-        
-
-
-
-
     }
-
-
-
-
-
-
-
 }
 
 

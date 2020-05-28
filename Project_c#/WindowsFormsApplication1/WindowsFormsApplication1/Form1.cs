@@ -12,21 +12,13 @@ namespace TestPro
 {
     public partial class Form1 : Form
     {
-
-
         public Form1()
         {
-
-
-                
+                           
             //デザイナ情報の呼び出し
             InitializeComponent();
             
         }
-
-
-
-
 
         //////////////////////////////////////////////////
         //検索ボタン押下                                //
@@ -57,16 +49,6 @@ namespace TestPro
                 strSQL += "WHERE ";
                 strSQL += "受注NO = '" + txtOrderMSNo.Text.Trim() + "' ";
             }
-
-
-//            strSQL = @"
-//                                 SELECT
-//                                   *
-//                                 FROM
-//                                   ORDER_TBL
-//                                 WHERE
-//                                   受注NO = 8
-//                                ";
 
             //SQLを渡して実行、DataSetを返す
             dsDataset = DataGridViewConnect.DataGridViewConnect1(strSQL);
