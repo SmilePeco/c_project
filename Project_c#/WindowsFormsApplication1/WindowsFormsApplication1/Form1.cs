@@ -12,8 +12,7 @@ namespace TestPro
 {
     public partial class Form1 : Form
     {
-        //Datasetの設定
-        var dsDataset = new DataSet();
+
 
         public Form1()
         {
@@ -34,23 +33,57 @@ namespace TestPro
         //////////////////////////////////////////////////
         private void btnSearch_Click(object sender, EventArgs e)
         {
-           //DB接続
-            DBConnect.DBConnect_Main();
-            Program.ShipmentMS_MainSearch();
-
-
            
+            //変数定義
+            DataGridViewConnect DataGridViewConnect = new DataGridViewConnect();
+            DataSet dsDataset = new DataSet();
+            string strSQL;
+            //テキストボックスの０埋め
+            if (txtOrderMSNo.Text.Trim() != "")
+            {
+                txtOrderMSNo.Text = txtOrderMSNo.Text.PadLeft(3, '0');
+                            }
 
-            //DataGridViewの設定
-            this.DataGridView1.DataSource = Program.
+            //DB接続
+            DBConnect.DBConnect_Main();
+            //SQL生成
+            // 実行するSQLの準備
+            strSQL = "";
+            strSQL += "SELECT ";
+            strSQL += "* ";
+            strSQL += "FROM ";
+            strSQL += "ORDER_TBL ";
+            if (txtOrderMSNo.Text.Trim() != ""){
+                strSQL += "WHERE ";
+                strSQL += "受注NO = '" + txtOrderMSNo.Text.Trim() + "' ";
+            }
 
+
+//            strSQL = @"
+//                                 SELECT
+//                                   *
+//                                 FROM
+//                                   ORDER_TBL
+//                                 WHERE
+//                                   受注NO = 8
+//                                ";
+
+            //SQLを渡して実行、DataSetを返す
+            dsDataset = DataGridViewConnect.DataGridViewConnect1(strSQL);
+            //DataGridViewにバインド
+            if (dsDataset != null){
+                DataGridView1.DataSource = dsDataset.Tables[0];
+            }else{
+                DataGridView1.DataSource = null ;
+
+            }
+
+            //後処理
+            //クローズ処理
+            DBConnect.DBConnect_Close(DBConnect.cn);
+               
         }
 
-
-
-
-
-        
 
     }
 }

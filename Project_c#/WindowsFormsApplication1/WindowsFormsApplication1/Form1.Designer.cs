@@ -67,7 +67,7 @@
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(57, 12);
             this.Label1.TabIndex = 4;
-            this.Label1.Text = "出荷先NO";
+            this.Label1.Text = "受注先NO";
             // 
             // GroupBox3
             // 
@@ -134,7 +134,6 @@
             this.Controls.Add(this.GroupBox1);
             this.Name = "Form1";
             this.Text = "テスト";
-
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
             this.GroupBox3.ResumeLayout(false);

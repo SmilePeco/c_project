@@ -19,6 +19,8 @@ namespace TestPro
         public static SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["NAKADB"].ConnectionString);
         public static SqlCommand cd = null;
 
+
+
         //////////////////////////////////////////////////
         //DB接続                                        //
         //////////////////////////////////////////////////
@@ -67,6 +69,24 @@ namespace TestPro
 
 
         }
+
+        //////////////////////////////////////////////////
+        //DBクローズ                                    //
+        //////////////////////////////////////////////////
+        public static void  DBConnect_Close(SqlConnection cn)
+        {
+            //OPENしていた場合は、CLOSEする
+            if (cn.State == ConnectionState.Open)
+            {
+                //cn.Dispose();
+                cn.Close();
+            }
+
+
+        }
+
+
+        
 
 
 
