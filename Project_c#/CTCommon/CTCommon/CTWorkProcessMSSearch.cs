@@ -30,8 +30,29 @@ namespace CTCommon
                 case Keys.F1:
                     Search_Main();
                     break;
+                case Keys.F2:
+                    this.Close();
+                    break;
 
 
+            }
+
+        }
+
+
+        //////////////////////////////////////////////////
+        //ファンクションキーボタン押下処理              //
+        //////////////////////////////////////////////////
+        private void button_Click(object sender, EventArgs e)
+        {
+            //F1:検索ボタン押下
+            if (sender.Equals(this.btnSearch)){
+                Search_Main();
+            }
+
+            //F2:終了ボタン押下
+            if (sender.Equals(this.btnEnd)){
+                this.Close();
             }
 
         }
@@ -121,6 +142,8 @@ namespace CTCommon
             return receiveText;
 
         }
+
+
 
 
 

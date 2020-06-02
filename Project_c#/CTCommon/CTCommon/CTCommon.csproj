@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CTHumanMSSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CTHumanMSSearch.Designer.cs">
+      <DependentUpon>CTHumanMSSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="CTOrderMSSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,8 +65,12 @@
     </Compile>
     <Compile Include="DataGridViewConnect.cs" />
     <Compile Include="DBConnect.cs" />
+    <Compile Include="NameSubmit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CTHumanMSSearch.resx">
+      <DependentUpon>CTHumanMSSearch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CTOrderMSSearch.resx">
       <DependentUpon>CTOrderMSSearch.cs</DependentUpon>
     </EmbeddedResource>
