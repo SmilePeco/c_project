@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CT001_受注登録画面.Properties
+namespace CT002_受注登録画面.Properties
 {
 
 
