@@ -7,8 +7,8 @@
     <ProjectGuid>{7AD9172A-0F58-45E5-8BB6-049BA88A8006}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CT001_受注登録画面</RootNamespace>
-    <AssemblyName>CT001_受注登録画面</AssemblyName>
+    <RootNamespace>CT001_受注仮登録画面</RootNamespace>
+    <AssemblyName>CT001_受注仮登録画面</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubmitClass.cs" />
     <EmbeddedResource Include="CT001.resx">
       <DependentUpon>CT001.cs</DependentUpon>
     </EmbeddedResource>
@@ -64,6 +65,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
