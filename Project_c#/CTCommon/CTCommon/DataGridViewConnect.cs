@@ -13,7 +13,7 @@ using System.Configuration;
 
 namespace CTCommon
 {
-    class DataGridViewConnect
+    public class DataGridViewConnect
     {
 
         public DataSet DataGridViewConnect_Main(string strSQL)
@@ -40,12 +40,17 @@ namespace CTCommon
                 DataSet dsDataset = new DataSet();
 
                 daDataAdapter.Fill(dsDataset);
+
+                //クローズ処理
+                cn.Close();
                 
                 return dsDataset;
 
 
 
             }else{
+                //クローズ処理
+                cn.Close();
                 return null;
 
 

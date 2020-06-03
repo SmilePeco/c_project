@@ -38,6 +38,7 @@ namespace CTCommon
         {
             switch (e.KeyCode)
             {
+                 
                 case Keys.F1:
                     this.Close();
                     break;
@@ -67,8 +68,6 @@ namespace CTCommon
             DataGridViewConnect DataGridViewConnect = new DataGridViewConnect();
             DataSet dsDataset = new DataSet();
             string strSQL;
-            //DB接続
-            DBConnect.DBConect_Main();
             //SQL発行
             strSQL = "";
             strSQL += "SELECT ";

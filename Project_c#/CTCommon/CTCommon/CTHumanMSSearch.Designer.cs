@@ -49,7 +49,9 @@
             // 
             // btnEnd
             // 
-            this.btnEnd.Location = new System.Drawing.Point(12, 18);
+            this.btnEnd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEnd.Location = new System.Drawing.Point(351, 18);
             this.btnEnd.Name = "btnEnd";
             this.btnEnd.Size = new System.Drawing.Size(75, 23);
             this.btnEnd.TabIndex = 0;
