@@ -16,7 +16,7 @@ namespace CTCommon
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CTOrderMSSearch());
+            Application.Run(new CTPartsClassMSSearch());
         }
     }
 }

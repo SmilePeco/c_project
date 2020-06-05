@@ -63,6 +63,12 @@
     <Compile Include="CTOrderNOSearch.Designer.cs">
       <DependentUpon>CTOrderNOSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="CTPartsClassMSSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CTPartsClassMSSearch.Designer.cs">
+      <DependentUpon>CTPartsClassMSSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="CTWorkProcessMSSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CTOrderNOSearch.resx">
       <DependentUpon>CTOrderNOSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CTPartsClassMSSearch.resx">
+      <DependentUpon>CTPartsClassMSSearch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CTWorkProcessMSSearch.resx">
       <DependentUpon>CTWorkProcessMSSearch.cs</DependentUpon>
