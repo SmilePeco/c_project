@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("CT001_受注仮登録画面")]
+[assembly: AssemblyTitle("CTMENU_メインメニュー")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CT001_受注仮登録画面")]
+[assembly: AssemblyProduct("CTMENU_メインメニュー")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 次の GUID は、このプロジェクトが COM に公開される場合の、typelib の ID です
-[assembly: Guid("0287db5e-70cb-4aef-9b33-859594d9e953")]
+[assembly: Guid("14e7ce6c-71cc-44d6-95ce-c96f76b97472")]
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
 //

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 
 
-namespace CT001_受注登録画面
+namespace CT001_受注仮登録画面
 {
     class SubmitClass
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
-namespace CT001_受注登録画面
+namespace CT001_受注仮登録画面
 {
     public partial class CT001 : Form
     {

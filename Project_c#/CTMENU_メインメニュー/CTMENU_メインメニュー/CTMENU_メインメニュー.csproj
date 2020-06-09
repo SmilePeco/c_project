@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{363C308C-C913-4B10-9D76-EF52090CCB1C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CTMENU_メインメニュー</RootNamespace>
+    <AssemblyName>CTMENU_メインメニュー</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CheckClass.cs" />
+    <Compile Include="CTLOGIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CTLOGIN.Designer.cs">
+      <DependentUpon>CTLOGIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CTMENU.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CTMENU.Designer.cs">
+      <DependentUpon>CTMENU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CTPASSCHANGE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CTPASSCHANGE.Designer.cs">
+      <DependentUpon>CTPASSCHANGE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubmitClass.cs" />
+    <EmbeddedResource Include="CTLOGIN.resx">
+      <DependentUpon>CTLOGIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CTMENU.resx">
+      <DependentUpon>CTMENU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CTPASSCHANGE.resx">
+      <DependentUpon>CTPASSCHANGE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CT001_受注仮登録画面\CT001_受注仮登録画面\CT001_受注仮登録画面.csproj">
+      <Project>{7ad9172a-0f58-45e5-8bb6-049ba88a8006}</Project>
+      <Name>CT001_受注仮登録画面</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CT002_受注登録画面\CT002_受注登録画面\CT002_受注登録画面.csproj">
+      <Project>{58f7b92a-6491-4346-9861-d8006b7dd7d8}</Project>
+      <Name>CT002_受注登録画面</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CT003_社員マスタメンテナンス\CT003_社員マスタメンテナンス\CT003_社員マスタメンテナンス.csproj">
+      <Project>{50e65672-b232-493e-a35c-d4c01ec48d3c}</Project>
+      <Name>CT003_社員マスタメンテナンス</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CT004_部品分類マスタメンテナンス\CT004_部品分類マスタメンテナンス\CT004_部品分類マスタメンテナンス.csproj">
+      <Project>{b27b27c7-262f-40f5-9459-4be52a8d873f}</Project>
+      <Name>CT004_部品分類マスタメンテナンス</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CT005_部品マスタメンテナンス\CT005_部品マスタメンテナンス\CT005_部品マスタメンテナンス.csproj">
+      <Project>{05523f8e-b11e-4f13-a747-95897a70f6f5}</Project>
+      <Name>CT005_部品マスタメンテナンス</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CTCommon\CTCommon\CTCommon.csproj">
+      <Project>{ec0ae112-fb43-4bba-be30-545dcf38855a}</Project>
+      <Name>CTCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

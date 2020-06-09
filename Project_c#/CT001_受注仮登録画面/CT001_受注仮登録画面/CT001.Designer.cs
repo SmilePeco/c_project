@@ -1,4 +1,4 @@
-﻿namespace CT001_受注登録画面
+﻿namespace CT001_受注仮登録画面
 {
     partial class CT001
     {

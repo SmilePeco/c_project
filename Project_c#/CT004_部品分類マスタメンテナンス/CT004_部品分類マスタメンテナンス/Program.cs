@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CT001_受注仮登録画面
+
+namespace CT004_部品分類マスタメンテナンス
 {
     static class Program
     {
@@ -16,7 +17,7 @@ namespace CT001_受注仮登録画面
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CT001());
+            Application.Run(new CT004());
         }
     }
 }
