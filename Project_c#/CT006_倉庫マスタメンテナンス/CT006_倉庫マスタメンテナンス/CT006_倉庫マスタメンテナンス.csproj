@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EC0AE112-FB43-4BBA-BE30-545DCF38855A}</ProjectGuid>
+    <ProjectGuid>{5E8DFCED-EDCC-431E-AB00-7ABAFFB62A5B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CTCommon</RootNamespace>
-    <AssemblyName>CTCommon</AssemblyName>
+    <RootNamespace>CT006_倉庫マスタメンテナンス</RootNamespace>
+    <AssemblyName>CT006_倉庫マスタメンテナンス</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,7 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,73 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CTHumanMSSearch.cs">
+    <Compile Include="CheckClass.cs" />
+    <Compile Include="CT006.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CTHumanMSSearch.Designer.cs">
-      <DependentUpon>CTHumanMSSearch.cs</DependentUpon>
+    <Compile Include="CT006.Designer.cs">
+      <DependentUpon>CT006.cs</DependentUpon>
     </Compile>
-    <Compile Include="CTOrderMSSearch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CTOrderMSSearch.Designer.cs">
-      <DependentUpon>CTOrderMSSearch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CTOrderNOSearch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CTOrderNOSearch.Designer.cs">
-      <DependentUpon>CTOrderNOSearch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CTPartsClassMSSearch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CTPartsClassMSSearch.Designer.cs">
-      <DependentUpon>CTPartsClassMSSearch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CTPartsMSSearch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CTPartsMSSearch.Designer.cs">
-      <DependentUpon>CTPartsMSSearch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CTWarehouseMSSearch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CTWarehouseMSSearch.Designer.cs">
-      <DependentUpon>CTWarehouseMSSearch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CTWorkProcessMSSearch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CTWorkProcessMSSearch.Designer.cs">
-      <DependentUpon>CTWorkProcessMSSearch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataGridViewConnect.cs" />
-    <Compile Include="DBConnect.cs" />
-    <Compile Include="NameSubmit.cs" />
+    <Compile Include="DeleteClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CTHumanMSSearch.resx">
-      <DependentUpon>CTHumanMSSearch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CTOrderMSSearch.resx">
-      <DependentUpon>CTOrderMSSearch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CTOrderNOSearch.resx">
-      <DependentUpon>CTOrderNOSearch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CTPartsClassMSSearch.resx">
-      <DependentUpon>CTPartsClassMSSearch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CTPartsMSSearch.resx">
-      <DependentUpon>CTPartsMSSearch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CTWarehouseMSSearch.resx">
-      <DependentUpon>CTWarehouseMSSearch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CTWorkProcessMSSearch.resx">
-      <DependentUpon>CTWorkProcessMSSearch.cs</DependentUpon>
+    <Compile Include="SubmitClass.cs" />
+    <EmbeddedResource Include="CT006.resx">
+      <DependentUpon>CT006.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -134,6 +79,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CTCommon\CTCommon\CTCommon.csproj">
+      <Project>{ec0ae112-fb43-4bba-be30-545dcf38855a}</Project>
+      <Name>CTCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

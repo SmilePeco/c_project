@@ -79,7 +79,9 @@
             // 
             // txtWorkProcessMSNo
             // 
+            this.txtWorkProcessMSNo.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.txtWorkProcessMSNo.Location = new System.Drawing.Point(87, 21);
+            this.txtWorkProcessMSNo.MaxLength = 3;
             this.txtWorkProcessMSNo.Name = "txtWorkProcessMSNo";
             this.txtWorkProcessMSNo.Size = new System.Drawing.Size(70, 19);
             this.txtWorkProcessMSNo.TabIndex = 5;
