@@ -19,6 +19,8 @@ namespace CTMENU_メインメニュー
         CT003_社員マスタメンテナンス.CT003 CT003 = new CT003_社員マスタメンテナンス.CT003();
         CT004_部品分類マスタメンテナンス.CT004 CT004 = new CT004_部品分類マスタメンテナンス.CT004();
         CT005_部品マスタメンテナンス.CT005 CT005 = new CT005_部品マスタメンテナンス.CT005();
+        CT006_倉庫マスタメンテナンス.CT006 CT006 = new CT006_倉庫マスタメンテナンス.CT006();
+        CT007_製品マスタメンテナンス.CT007 CT007 = new CT007_製品マスタメンテナンス.CT007();
         public string strPublicAdminFLG; //ログインした管理者フラグの確認用
 
         public CTMENU()
@@ -117,8 +119,8 @@ namespace CTMENU_メインメニュー
                 btnSub01.Text = "社員マスタ"; btnSub01.Visible = true; //ボタン１設定
                 btnSub02.Text = "部品マスタ"; btnSub02.Visible = true; //ボタン２設定
                 btnSub03.Text = "部品分類マスタ"; btnSub03.Visible = true; //ボタン３設定
-                btnSub04.Text = ""; btnSub04.Visible = false; //ボタン４設定
-                btnSub05.Text = ""; btnSub05.Visible = false; //ボタン５設定
+                btnSub04.Text = "倉庫マスタ"; btnSub04.Visible = true; //ボタン４設定
+                btnSub05.Text = "製品マスタ"; btnSub05.Visible = true; //ボタン５設定
                 btnSub06.Text = ""; btnSub06.Visible = false; //ボタン６設定
                 btnSub07.Text = ""; btnSub07.Visible = false; //ボタン７設定
                 btnSub08.Text = ""; btnSub08.Visible = false; //ボタン８設定
@@ -152,6 +154,16 @@ namespace CTMENU_メインメニュー
             if (sender.Equals(this.btnSub03)){
                 if (btnSub03.Text == "部品分類マスタ") { CT004.ShowDialog(); }
 
+            }
+
+            //サブボタン４処理
+            if (sender.Equals(this.btnSub04)) {
+                if (btnSub04.Text == "倉庫マスタ") { CT006.ShowDialog(); }
+            }
+
+            //サブボタン５処理
+            if (sender.Equals(this.btnSub05)){
+                if (btnSub05.Text == "製品マスタ") { CT007.ShowDialog(); }
             }
 
 

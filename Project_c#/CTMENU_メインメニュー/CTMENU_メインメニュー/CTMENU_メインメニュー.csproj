@@ -118,6 +118,14 @@
       <Project>{05523f8e-b11e-4f13-a747-95897a70f6f5}</Project>
       <Name>CT005_部品マスタメンテナンス</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CT006_倉庫マスタメンテナンス\CT006_倉庫マスタメンテナンス\CT006_倉庫マスタメンテナンス.csproj">
+      <Project>{5e8dfced-edcc-431e-ab00-7abaffb62a5b}</Project>
+      <Name>CT006_倉庫マスタメンテナンス</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CT007_製品マスタメンテナンス\CT007_製品マスタメンテナンス\CT007_製品マスタメンテナンス.csproj">
+      <Project>{54567ead-c93d-4e01-90d6-8d000bc5c0a6}</Project>
+      <Name>CT007_製品マスタメンテナンス</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CTCommon\CTCommon\CTCommon.csproj">
       <Project>{ec0ae112-fb43-4bba-be30-545dcf38855a}</Project>
       <Name>CTCommon</Name>
