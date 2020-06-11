@@ -1,6 +1,6 @@
 ﻿namespace CTCommon
 {
-    partial class CTPartsMSSearch
+    partial class CTProductMSSearch
     {
         /// <summary>
         /// Required designer variable.
@@ -28,29 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.DataGridView1 = new System.Windows.Forms.DataGridView();
+            this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.txtPartsCode = new System.Windows.Forms.TextBox();
             this.Label1 = new System.Windows.Forms.Label();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
             this.btnEnd = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.GroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).BeginInit();
+            this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
             this.GroupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // GroupBox2
-            // 
-            this.GroupBox2.Controls.Add(this.DataGridView1);
-            this.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupBox2.Location = new System.Drawing.Point(0, 57);
-            this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(524, 266);
-            this.GroupBox2.TabIndex = 12;
-            this.GroupBox2.TabStop = false;
             // 
             // DataGridView1
             // 
@@ -62,9 +52,19 @@
             this.DataGridView1.Name = "DataGridView1";
             this.DataGridView1.ReadOnly = true;
             this.DataGridView1.RowTemplate.Height = 21;
-            this.DataGridView1.Size = new System.Drawing.Size(518, 248);
+            this.DataGridView1.Size = new System.Drawing.Size(529, 276);
             this.DataGridView1.TabIndex = 0;
-            this.DataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
+            this.DataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentDoubleClick);
+            // 
+            // GroupBox2
+            // 
+            this.GroupBox2.Controls.Add(this.DataGridView1);
+            this.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GroupBox2.Location = new System.Drawing.Point(0, 57);
+            this.GroupBox2.Name = "GroupBox2";
+            this.GroupBox2.Size = new System.Drawing.Size(535, 294);
+            this.GroupBox2.TabIndex = 15;
+            this.GroupBox2.TabStop = false;
             // 
             // GroupBox1
             // 
@@ -73,8 +73,8 @@
             this.GroupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.GroupBox1.Location = new System.Drawing.Point(0, 0);
             this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(524, 57);
-            this.GroupBox1.TabIndex = 10;
+            this.GroupBox1.Size = new System.Drawing.Size(535, 57);
+            this.GroupBox1.TabIndex = 13;
             this.GroupBox1.TabStop = false;
             // 
             // txtPartsCode
@@ -93,24 +93,24 @@
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(56, 12);
             this.Label1.TabIndex = 4;
-            this.Label1.Text = "部品コード";
+            this.Label1.Text = "製品コード";
             // 
             // GroupBox3
             // 
             this.GroupBox3.Controls.Add(this.btnEnd);
             this.GroupBox3.Controls.Add(this.btnSearch);
             this.GroupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.GroupBox3.Location = new System.Drawing.Point(0, 323);
+            this.GroupBox3.Location = new System.Drawing.Point(0, 351);
             this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(524, 49);
-            this.GroupBox3.TabIndex = 11;
+            this.GroupBox3.Size = new System.Drawing.Size(535, 49);
+            this.GroupBox3.TabIndex = 14;
             this.GroupBox3.TabStop = false;
             // 
             // btnEnd
             // 
             this.btnEnd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEnd.Location = new System.Drawing.Point(422, 17);
+            this.btnEnd.Location = new System.Drawing.Point(433, 17);
             this.btnEnd.Name = "btnEnd";
             this.btnEnd.Size = new System.Drawing.Size(75, 23);
             this.btnEnd.TabIndex = 3;
@@ -125,22 +125,21 @@
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "F1:検索";
             this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.Button_Click);
             // 
-            // CTPartsMSSearch
+            // CTProductMSSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 372);
+            this.ClientSize = new System.Drawing.Size(535, 400);
             this.Controls.Add(this.GroupBox2);
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.GroupBox3);
             this.KeyPreview = true;
-            this.Name = "CTPartsMSSearch";
-            this.Text = "部品マスタ検索";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CTPartsMSSearch_KeyDown);
-            this.GroupBox2.ResumeLayout(false);
+            this.Name = "CTProductMSSearch";
+            this.Text = "製品マスタ検索";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CTProductMSSearch_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView1)).EndInit();
+            this.GroupBox2.ResumeLayout(false);
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
             this.GroupBox3.ResumeLayout(false);
@@ -150,8 +149,8 @@
 
         #endregion
 
-        internal System.Windows.Forms.GroupBox GroupBox2;
         public System.Windows.Forms.DataGridView DataGridView1;
+        internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.GroupBox GroupBox1;
         internal System.Windows.Forms.TextBox txtPartsCode;
         internal System.Windows.Forms.Label Label1;

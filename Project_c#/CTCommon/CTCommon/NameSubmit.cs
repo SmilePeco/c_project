@@ -11,6 +11,10 @@ namespace CTCommon
     public class NameSubmit
     {
 
+        //////////// 概要 ////////////
+       //
+ 
+        public string strSQL;
         public string strReturnName = ""; //返却用変数 
 
 
@@ -20,7 +24,6 @@ namespace CTCommon
         public string OrderMSName_Submit(string strOrderMSNo){
             //変数定義
             SqlCommand cd = null;
-            string strSQL;
             SqlDataReader dtReader;
             //DB接続
             DBConnect.DBConect_Main();
@@ -62,7 +65,6 @@ namespace CTCommon
         //////////////////////////////////////////////////
         public string WorkProcessMSName_Submit(string strWorkProcessNo){
             //変数定義
-            string strSQL;
             SqlDataReader dtReader;
             SqlCommand cd = null;
             //DB接続
@@ -93,6 +95,45 @@ namespace CTCommon
                 dtReader.Close();
                 DBConnect.DBConnect_Close(DBConnect.cn);
                 return strReturnName;
+            }
+        }
+
+
+        //////////////////////////////////////////////////
+        //部品名 名前代入処理                           //
+        //////////////////////////////////////////////////
+        public string PartsName_Submit(string strPartsCode)
+        {
+            //変数定義
+            SqlCommand cd = null;
+            SqlDataReader dtReader;
+            //SQL発行
+            strSQL = "";
+            strSQL += "SELECT ";
+            strSQL += " 部品名 ";
+            strSQL += "FROM ";
+            strSQL += " PARTS_MS ";
+            strSQL += "WHERE ";
+            strSQL += " 部品コード = '" + strPartsCode + "' ";
+            //SQL実行
+            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+            CTCommon.DBConnect.cn.Open();
+            dtReader = cd.ExecuteReader();
+            //dtReader読込
+            if (dtReader.HasRows){
+                if (dtReader.Read()) { strReturnName = dtReader["部品名"].ToString().Trim(); }
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return strReturnName;
+
+            }else{
+                //ありえないが、空白をかえす
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return strReturnName;
+
             }
 
 

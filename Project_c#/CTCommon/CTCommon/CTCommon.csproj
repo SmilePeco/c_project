@@ -75,6 +75,12 @@
     <Compile Include="CTPartsMSSearch.Designer.cs">
       <DependentUpon>CTPartsMSSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="CTProductMSSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CTProductMSSearch.Designer.cs">
+      <DependentUpon>CTProductMSSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="CTWarehouseMSSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CTPartsMSSearch.resx">
       <DependentUpon>CTPartsMSSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CTProductMSSearch.resx">
+      <DependentUpon>CTProductMSSearch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CTWarehouseMSSearch.resx">
       <DependentUpon>CTWarehouseMSSearch.cs</DependentUpon>

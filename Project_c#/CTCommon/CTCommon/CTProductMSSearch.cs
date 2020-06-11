@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace CTCommon
 {
-    public partial class CTPartsMSSearch : Form
+    public partial class CTProductMSSearch : Form
     {
 
-        public string strSQL; //SQL生成用
+        public string strSQL;
         public string strReturnValue;
 
-        public CTPartsMSSearch()
+        public CTProductMSSearch()
         {
             InitializeComponent();
         }
@@ -25,26 +25,19 @@ namespace CTCommon
         //////////////////////////////////////////////////
         //ファンクションキー処理                        //
         //////////////////////////////////////////////////
-        private void CTPartsMSSearch_KeyDown(object sender, KeyEventArgs e)
+        private void CTProductMSSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode){
+            switch (e.KeyCode)
+            {
                 case Keys.F1:
                     Search_Main();
                     break;
+
                 case Keys.F2:
                     this.Close();
                     break;
             }
-        }
 
-
-        //////////////////////////////////////////////////
-        //ボタン押下処理                                //
-        //////////////////////////////////////////////////
-        private void Button_Click(object sender, EventArgs e)
-        {
-            if (sender.Equals(this.btnSearch)) { Search_Main(); } //検索処理
-            if (sender.Equals(this.btnEnd)) { this.Close(); } //終了処理
 
 
         }
@@ -53,29 +46,28 @@ namespace CTCommon
         //////////////////////////////////////////////////
         //検索メイン処理                                //
         //////////////////////////////////////////////////
-        private void Search_Main(){
-
+        private void Search_Main()
+        {
             //変数定義
             DataSet dsDataset = new DataSet();
             DataGridViewConnect DataGridViewConnect = new DataGridViewConnect();
-
             //SQL発行
             strSQL = "";
             strSQL += "SELECT ";
-            strSQL += " 部品No, ";
-            strSQL += " 部品コード, ";
-            strSQL += " 部品名 ";
+            strSQL += " 製品コード, ";
+            strSQL += " 製品名 ";
             strSQL += "FROM ";
-            strSQL += " PARTS_MS ";
+            strSQL += " PRODUCT_MS ";
             strSQL += "WHERE ";
-            strSQL += " 部品コード LIKE '" + txtPartsCode.Text.Trim() + "%' ";
-            strSQL += "ORDER BY ";
-            strSQL += " 部品No ";
-            //Datasetを取得
+            strSQL += " 製品コード LIKE 'S%' ";
+            //DataSet取得
             dsDataset = DataGridViewConnect.DataGridViewConnect_Main(strSQL);
-            //Datasetをバインド
-            if (dsDataset != null) { DataGridView1.DataSource = dsDataset.Tables[0]; }
-            else { DataGridView1.DataSource = null; }
+            if (dsDataset != null){
+                DataGridView1.DataSource = dsDataset.Tables[0];
+            }else{
+                DataGridView1.DataSource = null;
+            }
+
             //トリム処理
             for (int i = 0; i <= DataGridView1.RowCount - 1; i++){
                 for (int y = 0; y <= DataGridView1.ColumnCount - 1; y++){
@@ -90,35 +82,41 @@ namespace CTCommon
             //クローズ処理
             CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
 
+
         }
 
         //////////////////////////////////////////////////
         //DataGridView ダブルクリック処理               //
         //////////////////////////////////////////////////
-        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //現在行を取得
+            //現在行番号の取得
             int intRow = e.RowIndex;
             //行の値を取得
-            string strPartsCode = DataGridView1[1, intRow].Value.ToString().Trim();
+            string strProductNo = DataGridView1[0, intRow].Value.ToString();
             //値を返す
-            strReturnValue = strPartsCode;
+            strReturnValue = strProductNo;
             this.Close();
 
         }
 
+
         //////////////////////////////////////////////////
         //値返却用フォーム                              //
         //////////////////////////////////////////////////
-        public string Showminiform()
+        public string Showminifrom()
         {
-            CTPartsMSSearch frmSearch = new CTPartsMSSearch();
+            //変数定義
+            CTProductMSSearch frmSearch = new CTProductMSSearch();
             frmSearch.ShowDialog();
-            //ダブルクリックした値を返す
             string strReciveValue = frmSearch.strReturnValue;
             frmSearch.Dispose();
             return strReciveValue;
         }
+
+
+
+
 
 
 
