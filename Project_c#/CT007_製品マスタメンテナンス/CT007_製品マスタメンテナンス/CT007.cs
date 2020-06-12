@@ -48,7 +48,7 @@ namespace CT007_製品マスタメンテナンス
 
             //製品コード検索ボタン押下
             if (sender.Equals(this.btnSearchProductCodeSearch)){
-                string strReciveValue = frmProduct.Showminifrom();
+                string strReciveValue = frmProduct.Showminiform();
                 txtSearchProductCode.Text = strReciveValue;
             }
 
