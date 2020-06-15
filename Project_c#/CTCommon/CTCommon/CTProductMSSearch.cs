@@ -59,7 +59,7 @@ namespace CTCommon
             strSQL += "FROM ";
             strSQL += " PRODUCT_MS ";
             strSQL += "WHERE ";
-            strSQL += " 製品コード LIKE 'S%' ";
+            strSQL += " 製品コード LIKE '" + txtProductCode.Text.Trim() + "%' ";
             //DataSet取得
             dsDataset = DataGridViewConnect.DataGridViewConnect_Main(strSQL);
             if (dsDataset != null){
@@ -104,7 +104,7 @@ namespace CTCommon
         //////////////////////////////////////////////////
         //値返却用フォーム                              //
         //////////////////////////////////////////////////
-        public string Showminifrom()
+        public string Showminiform()
         {
             //変数定義
             CTProductMSSearch frmSearch = new CTProductMSSearch();

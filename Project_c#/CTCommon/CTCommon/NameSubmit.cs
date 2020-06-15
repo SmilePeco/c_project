@@ -140,5 +140,127 @@ namespace CTCommon
 
         }
 
+        //////////////////////////////////////////////////
+        //製品名 名前代入処理                           //
+        //////////////////////////////////////////////////
+        public string ProductName_Submit(string strProductCode)
+        {
+            //変数定義
+            SqlCommand cd = null;
+            SqlDataReader dtReader;
+            //SQL発行
+            strSQL = "";
+            strSQL += "SELECT ";
+            strSQL += " 製品名 ";
+            strSQL += "FROM ";
+            strSQL += " PRODUCT_MS ";
+            strSQL += "WHERE ";
+            strSQL += " 製品コード = '" + strProductCode + "' ";
+            //SQL実行
+            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+            CTCommon.DBConnect.cn.Open();
+            dtReader = cd.ExecuteReader();
+            //dtReader読込
+            if (dtReader.HasRows){
+                if (dtReader.Read()) { strReturnName = dtReader["製品名"].ToString().Trim(); }
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return strReturnName;
+
+            }else{
+                //ありえないが、空白をかえす
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return strReturnName;
+
+            }
+        }
+
+        //////////////////////////////////////////////////
+        //工程名 名前代入処理                           //
+        //////////////////////////////////////////////////
+        public string ProcessName_Submit(string strProcessNo)
+        {
+            //変数定義
+            SqlCommand cd = null;
+            SqlDataReader dtReader;
+            //SQL発行
+            strSQL = "";
+            strSQL += "SELECT ";
+            strSQL += " 工程名 ";
+            strSQL += "FROM ";
+            strSQL += " PROCESS_MS ";
+            strSQL += "WHERE ";
+            strSQL += " 工程NO = '" + strProcessNo + "' ";
+            //SQL実行
+            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+            CTCommon.DBConnect.cn.Open();
+            dtReader = cd.ExecuteReader();
+            //dtReader読込
+            if (dtReader.HasRows)
+            {
+                if (dtReader.Read()) { strReturnName = dtReader["工程名"].ToString().Trim(); }
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return strReturnName;
+
+            }
+            else
+            {
+                //ありえないが、空白をかえす
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return strReturnName;
+
+            }
+        }
+
+
+
+        //////////////////////////////////////////////////
+        //ライン名 名前代入処理                         //
+        //////////////////////////////////////////////////
+        public string WorklineName_Submit(string strWorklineNo)
+        {
+            //変数定義
+            SqlCommand cd = null;
+            SqlDataReader dtReader;
+            //SQL発行
+            strSQL = "";
+            strSQL += "SELECT ";
+            strSQL += " 作業ライン名 ";
+            strSQL += "FROM ";
+            strSQL += " WORKLINE_MS ";
+            strSQL += "WHERE ";
+            strSQL += " 作業ラインNO = '" + strWorklineNo + "' ";
+            //SQL実行
+            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+            CTCommon.DBConnect.cn.Open();
+            dtReader = cd.ExecuteReader();
+            //dtReader読込
+            if (dtReader.HasRows)
+            {
+                if (dtReader.Read()) { strReturnName = dtReader["作業ライン名"].ToString().Trim(); }
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return strReturnName;
+
+            }
+            else
+            {
+                //ありえないが、空白をかえす
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return strReturnName;
+
+            }
+        }
+
     }
 }

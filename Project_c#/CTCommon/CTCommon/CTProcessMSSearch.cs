@@ -144,7 +144,7 @@ namespace CTCommon
             //変数定義
             CTProcessMSSearch frmSearch = new CTProcessMSSearch();
             frmSearch.ShowDialog();
-            string strReturnValue2 = strReturnValue;
+            string strReturnValue2 = frmSearch.strReturnValue;
             return strReturnValue2;
 
         }
