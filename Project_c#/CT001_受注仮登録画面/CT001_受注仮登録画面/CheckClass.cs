@@ -21,8 +21,7 @@ namespace CT001_受注仮登録画面
             SqlDataReader dtReader;
             SqlCommand cd = null;
             
-            //DB接続
-            CTCommon.DBConnect.DBConect_Main();
+
             //SQL発行
             strSQL = "";
             strSQL += "SELECT ";
@@ -45,7 +44,6 @@ namespace CT001_受注仮登録画面
 
             }else{
                 //存在しなかった場合はエラーを返す
-                MessageBox.Show("入力した受注先NOは存在しません。 \r\n確認してください。","エラー",MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 //クローズ処理
                 dtReader.Close();
                 CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
@@ -55,24 +53,67 @@ namespace CT001_受注仮登録画面
         }
 
         //////////////////////////////////////////////////
-        //作業工程NOチェック処理                        //
+        //製品コードチェック処理                        //
         //////////////////////////////////////////////////
-        public Boolean smCheck_ShipmentMS(string strShipmentMSNo){
+        public Boolean smCheck_ProductMS(string strProductCode)
+        {
             //変数定義
             string strSQL;
             SqlCommand cd = null;
             SqlDataReader dtReader;
 
-            //DB接続
-            CTCommon.DBConnect.DBConect_Main();
             //SQL発行
             strSQL = "";
             strSQL += "SELECT ";
-            strSQL += " 作業工程NO ";
+            strSQL += " 製品コード ";
             strSQL += "FROM ";
-            strSQL += " WORKPROCESS_MS ";
+            strSQL += " PRODUCT_MS ";
             strSQL += "WHERE ";
-            strSQL += " 作業工程NO = '" + strShipmentMSNo +  "' ";
+            strSQL += " 製品コード = '" + strProductCode + "' ";
+            //SQL実行
+            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+            CTCommon.DBConnect.cn.Open();
+            dtReader = cd.ExecuteReader();
+            //dtReader読込
+            if (dtReader.HasRows)
+            {
+                //存在した場合はTRUEを返す
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return true;
+
+            }
+            else
+            {
+                //存在しなかった場合はエラーを返す
+                //クローズ処理
+                dtReader.Close();
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                return false;
+
+            }
+        }
+
+
+
+        //////////////////////////////////////////////////
+        //作業ラインNOチェック処理                        //
+        //////////////////////////////////////////////////
+        public Boolean smCheck_WorklineMS(string strWorklineMS){
+            //変数定義
+            string strSQL;
+            SqlCommand cd = null;
+            SqlDataReader dtReader;
+
+            //SQL発行
+            strSQL = "";
+            strSQL += "SELECT ";
+            strSQL += " 作業ラインNO ";
+            strSQL += "FROM ";
+            strSQL += " WORKLINE_MS ";
+            strSQL += "WHERE ";
+            strSQL += " 作業ラインNO = '" + strWorklineMS +  "' ";
             //SQL実行
             cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
             CTCommon.DBConnect.cn.Open();
@@ -87,7 +128,6 @@ namespace CT001_受注仮登録画面
 
             }else {
                 //存在しなかった場合はエラーを返す
-                MessageBox.Show("入力した作業工程NOは存在しません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 //クローズ処理
                 dtReader.Close();
                 CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
@@ -104,10 +144,8 @@ namespace CT001_受注仮登録画面
         public Boolean smCheck_HumanMS(string strHumanMSNo){
             //変数定義
             SqlCommand cd = null;
-            string strSQL;
+            
             SqlDataReader dtReader;
-            //DB接続
-            CTCommon.DBConnect.DBConect_Main();
             //SQL発行
             strSQL = "";
             strSQL += "SELECT ";
@@ -129,18 +167,15 @@ namespace CT001_受注仮登録画面
 
             }else{
                 //存在しなかった場合はエラーを返す
-                MessageBox.Show("入力した更新担当者は存在しません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 //クローズ処理
                 dtReader.Close();
                 CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
                 return false;
-
             }
-
-
-
-
         }
+
+
+
 
     }
 }

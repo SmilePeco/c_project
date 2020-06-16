@@ -15,56 +15,58 @@ namespace CT001_受注仮登録画面
         //////////////////////////////////////////////////
         //登録処理                                      //
         //////////////////////////////////////////////////
-        public void Submit_Main(string txtOrderNo, string txtOrderMSNo, string txtWorkProcessMSNo, string txtHumanMSNo, string txtOrderNumber)
+        public string Submit_Main(string strOrderNo, string strOrderMSNo,string strProductCode, string strWorklineNo, string strOrderNumber, string strOrderUnitPrice, string strOrderPrice, string strHumanNo)
         {
             //変数定義
-            SqlCommand cd = null;
             string strSQL;
 
-            try
-            {
-                //DB接続
-                CTCommon.DBConnect.DBConect_Main();
-                //SQL発行
-                strSQL = "";
-                strSQL += "INSERT INTO ORDER_TBL VALUES ";
-                strSQL += " ( ";
-                strSQL += " " + txtOrderNo + ", "; //受注NO
-                strSQL += " '" + txtOrderMSNo + "', "; //受注先NO
-                strSQL += " '" + txtWorkProcessMSNo + "', "; //作業工程NO
-                strSQL += " " + txtOrderNumber + ", "; //受注数
-                strSQL += " SYSDATETIME(), "; //受注日
-                strSQL += " '" + txtHumanMSNo + "', "; //最終更新者
-                strSQL += " 0, "; //受注チェックフラグ
-                strSQL += " 0, "; //出荷チェックフラグ
-                strSQL += " SYSDATETIME(), "; //更新日
-                strSQL += " SYSDATETIME() "; //登録日
-                strSQL += " ) ";
-                //SQL実行
-                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                CTCommon.DBConnect.cn.Open();
-                cd.ExecuteNonQuery();
-                MessageBox.Show("登録できました。", "登録完了", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            //DB接続
+            CTCommon.DBConnect.DBConect_Main();
+            //SQL発行
+            strSQL = "";
+            strSQL += "INSERT INTO RECEIVE_TBL VALUES ";
+            strSQL += " ( ";
+            strSQL += " " + strOrderNo + ", "; //受注NO
+            strSQL += " '" + strOrderMSNo + "', "; //受注先NO
+            strSQL += " '" + strProductCode + "', "; //製品コード
+            strSQL += " '" + strWorklineNo + "', "; //作業ラインNO
+            strSQL += " " + strOrderNumber + ", "; //受注数
+            strSQL += " " + strOrderUnitPrice + ", "; //受注単価
+            strSQL += " " + strOrderPrice + ", "; //受注金額
+            strSQL += " SYSDATETIME(), "; //受注日
+            strSQL += " '" + strHumanNo + "', "; //最終更新者
+            strSQL += " 0, "; //受注チェックフラグ
+            strSQL += " 0, "; //出荷チェックフラグ
+            strSQL += " SYSDATETIME(), "; //更新日
+            strSQL += " SYSDATETIME() "; //登録日
+            strSQL += " ) ";
+            //SQLをかえす
+            return strSQL;
                 
 
 
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            finally
-            {
-                //後処理
-                //クローズ処理
-                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
-            }
 
-
-
-            
 
         }
+
+        //////////////////////////////////////////////////
+        //単価計算処理                                  //
+        //////////////////////////////////////////////////
+        public string Submit_OrderPrice(string strOrderNumber, string strOrderUnitPrice){
+            //変数定義
+
+            //受注数、受注単価が空欄だった場合は、０とする
+            if (strOrderNumber == "") { strOrderNumber = "0"; }
+            if (strOrderUnitPrice == "") { strOrderUnitPrice = "0"; }
+            //単価*受注数
+            int intOrderPrice = int.Parse(strOrderNumber) * int.Parse(strOrderUnitPrice);
+            string strOrderPrice = Convert.ToString(intOrderPrice);
+            return strOrderPrice;
+            
+
+
+        }
+
 
 
     }
