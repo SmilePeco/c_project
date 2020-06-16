@@ -110,6 +110,7 @@
     <Compile Include="NameSubmit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueCheck.cs" />
     <EmbeddedResource Include="CTHumanMSSearch.resx">
       <DependentUpon>CTHumanMSSearch.cs</DependentUpon>
     </EmbeddedResource>
