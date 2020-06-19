@@ -126,6 +126,22 @@
       <Project>{54567ead-c93d-4e01-90d6-8d000bc5c0a6}</Project>
       <Name>CT007_製品マスタメンテナンス</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CT008_作業ラインマスタメンテナンス\CT008_作業ラインマスタメンテナンス\CT008_作業ラインマスタメンテナンス.csproj">
+      <Project>{20e64b30-959a-4d57-bc88-f59c750a0b08}</Project>
+      <Name>CT008_作業ラインマスタメンテナンス</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CT009_受注先マスタメンテナンス\CT009_受注先マスタメンテナンス\CT009_受注先マスタメンテナンス.csproj">
+      <Project>{94de2522-584e-47e4-b5bf-924167f46800}</Project>
+      <Name>CT009_受注先マスタメンテナンス</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CT010_部品仮登録画面\CT010_部品仮登録画面\CT010_部品仮登録画面.csproj">
+      <Project>{b3430a96-5905-4a3e-a23b-6c8a253bb472}</Project>
+      <Name>CT010_部品仮登録画面</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CT011_部品本登録画面\CT011_部品本登録画面\CT011_部品本登録画面.csproj">
+      <Project>{9184c093-e44c-49a3-9d54-3399306d41c7}</Project>
+      <Name>CT011_部品本登録画面</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CTCommon\CTCommon\CTCommon.csproj">
       <Project>{ec0ae112-fb43-4bba-be30-545dcf38855a}</Project>
       <Name>CTCommon</Name>

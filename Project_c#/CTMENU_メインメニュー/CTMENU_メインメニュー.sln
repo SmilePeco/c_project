@@ -21,6 +21,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT006_倉庫マスタメン
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT007_製品マスタメンテナンス", "..\CT007_製品マスタメンテナンス\CT007_製品マスタメンテナンス\CT007_製品マスタメンテナンス.csproj", "{54567EAD-C93D-4E01-90D6-8D000BC5C0A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT008_作業ラインマスタメンテナンス", "..\CT008_作業ラインマスタメンテナンス\CT008_作業ラインマスタメンテナンス\CT008_作業ラインマスタメンテナンス.csproj", "{20E64B30-959A-4D57-BC88-F59C750A0B08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT009_受注先マスタメンテナンス", "..\CT009_受注先マスタメンテナンス\CT009_受注先マスタメンテナンス\CT009_受注先マスタメンテナンス.csproj", "{94DE2522-584E-47E4-B5BF-924167F46800}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT010_部品仮登録画面", "..\CT010_部品仮登録画面\CT010_部品仮登録画面\CT010_部品仮登録画面.csproj", "{B3430A96-5905-4A3E-A23B-6C8A253BB472}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT011_部品本登録画面", "..\CT011_部品本登録画面\CT011_部品本登録画面\CT011_部品本登録画面.csproj", "{9184C093-E44C-49A3-9D54-3399306D41C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +71,22 @@ Global
 		{54567EAD-C93D-4E01-90D6-8D000BC5C0A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54567EAD-C93D-4E01-90D6-8D000BC5C0A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54567EAD-C93D-4E01-90D6-8D000BC5C0A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E64B30-959A-4D57-BC88-F59C750A0B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E64B30-959A-4D57-BC88-F59C750A0B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E64B30-959A-4D57-BC88-F59C750A0B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E64B30-959A-4D57-BC88-F59C750A0B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DE2522-584E-47E4-B5BF-924167F46800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DE2522-584E-47E4-B5BF-924167F46800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DE2522-584E-47E4-B5BF-924167F46800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DE2522-584E-47E4-B5BF-924167F46800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3430A96-5905-4A3E-A23B-6C8A253BB472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3430A96-5905-4A3E-A23B-6C8A253BB472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3430A96-5905-4A3E-A23B-6C8A253BB472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3430A96-5905-4A3E-A23B-6C8A253BB472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9184C093-E44C-49A3-9D54-3399306D41C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9184C093-E44C-49A3-9D54-3399306D41C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9184C093-E44C-49A3-9D54-3399306D41C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9184C093-E44C-49A3-9D54-3399306D41C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

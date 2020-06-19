@@ -19,8 +19,8 @@ namespace CT002_受注登録画面
             if (intCount == 1){
                 //登録の場合
                 strSQL = "";
-                strSQL += "UPDATE ORDER_TBL ";
-                strSQL += "SET  受注チェックフラグ = 1,";
+                strSQL += "UPDATE RECEIVE_TBL ";
+                strSQL += "SET  受注完了フラグ = 1,";
                 strSQL += "     更新日 = SYSDATETIME() ";
                 strSQL += "WHERE 受注NO = " + strOrderNo + " ";
                 //作成したSQLを返す
@@ -29,7 +29,7 @@ namespace CT002_受注登録画面
             }else{
                 //削除の場合
                 strSQL = "";
-                strSQL += "DELETE FROM ORDER_TBL ";
+                strSQL += "DELETE FROM RECEIVE_TBL ";
                 strSQL += "WHERE 受注NO = " + strOrderNo + " ";
                 //作成したSQLを返す
                 return strSQL;

@@ -21,6 +21,11 @@ namespace CTMENU_メインメニュー
         CT005_部品マスタメンテナンス.CT005 CT005 = new CT005_部品マスタメンテナンス.CT005();
         CT006_倉庫マスタメンテナンス.CT006 CT006 = new CT006_倉庫マスタメンテナンス.CT006();
         CT007_製品マスタメンテナンス.CT007 CT007 = new CT007_製品マスタメンテナンス.CT007();
+        CT008_作業ラインマスタメンテナンス.CT008 CT008 = new CT008_作業ラインマスタメンテナンス.CT008();
+        CT009_受注先マスタメンテナンス.CT009 CT009 = new CT009_受注先マスタメンテナンス.CT009();
+        CT010_部品仮登録画面.CT010 CT010 = new CT010_部品仮登録画面.CT010();
+        CT011_部品本登録画面.CT011 CT011 = new CT011_部品本登録画面.CT011();
+
         public string strPublicAdminFLG; //ログインした管理者フラグの確認用
 
         public CTMENU()
@@ -71,8 +76,8 @@ namespace CTMENU_メインメニュー
             //メインボタン：生産処理を押下
             if (sender.Equals(this.btnMain02))
             {
-                btnSub01.Text = ""; btnSub01.Visible = false; //ボタン１設定
-                btnSub02.Text = ""; btnSub02.Visible = false; //ボタン２設定
+                btnSub01.Text = "部品仮登録"; btnSub01.Visible = true; //ボタン１設定
+                btnSub02.Text = "部品本登録"; btnSub02.Visible = true; //ボタン２設定
                 btnSub03.Text = ""; btnSub03.Visible = false; //ボタン３設定
                 btnSub04.Text = ""; btnSub04.Visible = false; //ボタン４設定
                 btnSub05.Text = ""; btnSub05.Visible = false; //ボタン５設定
@@ -121,8 +126,8 @@ namespace CTMENU_メインメニュー
                 btnSub03.Text = "部品分類マスタ"; btnSub03.Visible = true; //ボタン３設定
                 btnSub04.Text = "倉庫マスタ"; btnSub04.Visible = true; //ボタン４設定
                 btnSub05.Text = "製品マスタ"; btnSub05.Visible = true; //ボタン５設定
-                btnSub06.Text = ""; btnSub06.Visible = false; //ボタン６設定
-                btnSub07.Text = ""; btnSub07.Visible = false; //ボタン７設定
+                btnSub06.Text = "ラインマスタ"; btnSub06.Visible = true; //ボタン６設定
+                btnSub07.Text = "受注先マスタ"; btnSub07.Visible = true; //ボタン７設定
                 btnSub08.Text = ""; btnSub08.Visible = false; //ボタン８設定
                 btnSub09.Text = ""; btnSub09.Visible = false; //ボタン９設定
                 btnSub10.Text = ""; btnSub10.Visible = false; //ボタン１０設定
@@ -139,7 +144,8 @@ namespace CTMENU_メインメニュー
             //サブボタン１処理
             if (sender.Equals(this.btnSub01)){
                 if (btnSub01.Text == "受注仮登録") { CT001.ShowDialog(); }
-                if (btnSub01.Text == "社員マスタ") { CT003.ShowDialog(); } 
+                if (btnSub01.Text == "社員マスタ") { CT003.ShowDialog(); }
+                if (btnSub01.Text == "部品仮登録") { CT010.ShowDialog(); }
                 
             }
 
@@ -147,6 +153,7 @@ namespace CTMENU_メインメニュー
             if (sender.Equals(this.btnSub02)){
                 if (btnSub02.Text == "部品マスタ") { CT005.ShowDialog(); }
                 if (btnSub02.Text == "受注登録") { CT002.ShowDialog(); }
+                if (btnSub02.Text == "部品本登録") { CT011.ShowDialog(); }
 
             }
 
@@ -165,6 +172,19 @@ namespace CTMENU_メインメニュー
             if (sender.Equals(this.btnSub05)){
                 if (btnSub05.Text == "製品マスタ") { CT007.ShowDialog(); }
             }
+
+            //サブボタン６処理
+            if (sender.Equals(this.btnSub06)){
+                if (btnSub06.Text == "ラインマスタ") { CT008.ShowDialog();  }
+
+            }
+
+            //サブボタン７処理
+            if (sender.Equals(this.btnSub07)){
+                if (btnSub07.Text == "受注先マスタ") { CT009.ShowDialog(); }
+            }
+
+
 
 
         }

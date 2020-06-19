@@ -144,7 +144,7 @@ namespace CT001_受注仮登録画面
         public Boolean smCheck_HumanMS(string strHumanMSNo){
             //変数定義
             SqlCommand cd = null;
-            
+            string strSQL;
             SqlDataReader dtReader;
             //SQL発行
             strSQL = "";
