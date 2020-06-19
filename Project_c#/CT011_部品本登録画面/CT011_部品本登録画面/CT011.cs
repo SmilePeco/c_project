@@ -186,26 +186,29 @@ namespace CT011_部品本登録画面
                         {
                             //登録モード
                             //DataGridViewの値を１件ずつ最後尾まで取得
-                            for (int i = 0; i <= dataGridView1.RowCount - 1; i++)
-                            {
-                                //PARTS_TBL:SQL取得
-                                strSQL = SubmitClass.Submit_PartsTBL(dataGridView1[1, i].Value.ToString(), txtHumanMSNo.Text.Trim());
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //PARTS_TBL:更新処理
-                                cd.Transaction = tran;
-                                cd.ExecuteNonQuery();
-                                //PARTS_HISTORY_TBL:SQL取得
-                                strSQL = SubmitClass.Submit_PartsHistoryTBL(dataGridView1[1, i].Value.ToString(), txtHumanMSNo.Text.Trim());
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //PARTS_TBL:更新処理
-                                cd.Transaction = tran;
-                                cd.ExecuteNonQuery();
-                                //登録完了
-                                MessageBox.Show("登録完了しました。", "登録完了", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                                tran.Commit();
-                                smClear();
+                            for (int i = 0; i <= dataGridView1.RowCount - 1; i++){
+                                //チェックが入っている列のみ更新対象
+                                if (Convert.ToBoolean(dataGridView1[0, i].Value) == true){
+                                    //PARTS_TBL:SQL取得
+                                    strSQL = SubmitClass.Submit_PartsTBL(dataGridView1[1, i].Value.ToString(), txtHumanMSNo.Text.Trim());
+                                    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                                    //PARTS_TBL:更新処理
+                                    cd.Transaction = tran;
+                                    cd.ExecuteNonQuery();
+                                    //PARTS_HISTORY_TBL:SQL取得
+                                    strSQL = SubmitClass.Submit_PartsHistoryTBL(dataGridView1[1, i].Value.ToString(), txtHumanMSNo.Text.Trim());
+                                    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                                    //PARTS_TBL:更新処理
+                                    cd.Transaction = tran;
+                                    cd.ExecuteNonQuery();
+                                }
+        
                             }
 
+                            //登録完了
+                            MessageBox.Show("登録完了しました。", "登録完了", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            tran.Commit();
+                            smClear();
 
                         }
                         else
@@ -213,35 +216,34 @@ namespace CT011_部品本登録画面
                             //削除モード
                             for (int i = 0; i <= dataGridView1.RowCount - 1; i++)
                             {
-                                //PARTS_TBL:SQL取得
-                                strSQL = DeleteClass.Delete_PartsMS(dataGridView1[1, i].Value.ToString());
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //PARTS_TBL:削除処理
-                                cd.Transaction = tran;
-                                cd.ExecuteNonQuery();
-                                //PARTS_HISTORY_TBL:SQL取得
-                                strSQL = DeleteClass.Delete_PartsHistoryMS(dataGridView1[1, i].Value.ToString());
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //PARTS_TBL:削除処理
-                                cd.Transaction = tran;
-                                cd.ExecuteNonQuery();
-                                //登録完了
-                                MessageBox.Show("削除完了しました。", "削除完了", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                                tran.Commit();
-                                smClear();
-
+                                //チェックが入っている列のみ削除対象
+                                if (Convert.ToBoolean(dataGridView1[0, i].Value) == true){
+                                    //PARTS_TBL:SQL取得
+                                    strSQL = DeleteClass.Delete_PartsMS(dataGridView1[1, i].Value.ToString());
+                                    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                                    //PARTS_TBL:削除処理
+                                    cd.Transaction = tran;
+                                    cd.ExecuteNonQuery();
+                                    //PARTS_HISTORY_TBL:SQL取得
+                                    strSQL = DeleteClass.Delete_PartsHistoryMS(dataGridView1[1, i].Value.ToString());
+                                    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                                    //PARTS_TBL:削除処理
+                                    cd.Transaction = tran;
+                                    cd.ExecuteNonQuery();
+                                }
                             }
+
+                            //登録完了
+                            MessageBox.Show("削除完了しました。", "削除完了", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            tran.Commit();
+                            smClear();
 
                         }
 
-                    }
-                    catch (Exception e)
-                    {
+                    }catch (Exception e){
                         tran.Rollback();
                         MessageBox.Show(e.Message);
-                    }
-                    finally
-                    {
+                    }finally{
                         //クローズ処理
                         CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
                     }
