@@ -30,10 +30,12 @@ namespace CTCommon
             switch (e.KeyCode)
             {
                 case Keys.F1:
+                    //検索処理
                     Search_Main();
                     break;
 
                 case Keys.F2:
+                    //終了処理
                     this.Close();
                     break;
             }
@@ -42,6 +44,16 @@ namespace CTCommon
 
         }
 
+
+        //////////////////////////////////////////////////
+        //ボタン押下処理                                //
+        //////////////////////////////////////////////////
+        private void Button_Click(object sender, EventArgs e)
+        {
+            if (sender.Equals(this.btnSearch)) { Search_Main(); } //検索処理
+            if (sender.Equals(this.btnEnd)) { this.Close(); } //終了処理
+
+        }
 
         //////////////////////////////////////////////////
         //検索メイン処理                                //
@@ -113,6 +125,8 @@ namespace CTCommon
             frmSearch.Dispose();
             return strReciveValue;
         }
+
+
 
 
 

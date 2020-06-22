@@ -116,6 +116,7 @@
             this.btnEnd.TabIndex = 3;
             this.btnEnd.Text = "F2:終了";
             this.btnEnd.UseVisualStyleBackColor = true;
+            this.btnEnd.Click += new System.EventHandler(this.Button_Click);
             // 
             // btnSearch
             // 
@@ -125,6 +126,7 @@
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "F1:検索";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.Button_Click);
             // 
             // CTProductMSSearch
             // 

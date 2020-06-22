@@ -33,6 +33,32 @@ namespace CTCommon
 
         }
 
+
+        //////////////////////////////////////////////////
+        //ファンクションキー処理                        //
+        //////////////////////////////////////////////////
+        private void CTWarehouseMSSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode){
+                case Keys.F1:
+                    //終了処理
+                    this.Close();
+                    break;
+
+            }
+
+        }
+
+
+        //////////////////////////////////////////////////
+        //ボタン押下処理                                //
+        //////////////////////////////////////////////////
+        private void Button_Click(object sender, EventArgs e)
+        {
+            if (sender.Equals(this.btnEnd)) { this.Close(); } //終了処理
+
+        }
+
         //////////////////////////////////////////////////
         //検索メイン処理                                //
         //////////////////////////////////////////////////
@@ -101,6 +127,10 @@ namespace CTCommon
 
 
         }
+
+
+
+
 
 
 

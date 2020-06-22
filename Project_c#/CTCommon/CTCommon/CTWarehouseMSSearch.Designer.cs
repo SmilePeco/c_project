@@ -57,6 +57,7 @@
             this.btnEnd.TabIndex = 0;
             this.btnEnd.Text = "F1:終了";
             this.btnEnd.UseVisualStyleBackColor = true;
+            this.btnEnd.Click += new System.EventHandler(this.Button_Click);
             // 
             // groupBox2
             // 
@@ -89,9 +90,11 @@
             this.ClientSize = new System.Drawing.Size(519, 384);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.KeyPreview = true;
             this.Name = "CTWarehouseMSSearch";
             this.Text = "倉庫マスタ検索";
             this.Load += new System.EventHandler(this.CTWarehouseMSSearch_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CTWarehouseMSSearch_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
