@@ -142,6 +142,10 @@
       <Project>{9184c093-e44c-49a3-9d54-3399306d41c7}</Project>
       <Name>CT011_部品本登録画面</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CT012_製品生産画面\CT012_製品生産画面\CT012_製品生産画面.csproj">
+      <Project>{9eaf427b-aece-410f-a179-21d1abfb4ad3}</Project>
+      <Name>CT012_製品生産画面</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CTCommon\CTCommon\CTCommon.csproj">
       <Project>{ec0ae112-fb43-4bba-be30-545dcf38855a}</Project>
       <Name>CTCommon</Name>

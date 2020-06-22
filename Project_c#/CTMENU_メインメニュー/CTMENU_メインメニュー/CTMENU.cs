@@ -25,6 +25,7 @@ namespace CTMENU_メインメニュー
         CT009_受注先マスタメンテナンス.CT009 CT009 = new CT009_受注先マスタメンテナンス.CT009();
         CT010_部品仮登録画面.CT010 CT010 = new CT010_部品仮登録画面.CT010();
         CT011_部品本登録画面.CT011 CT011 = new CT011_部品本登録画面.CT011();
+        CT012_製品生産画面.CT012 CT012 = new CT012_製品生産画面.CT012();
 
         public string strPublicAdminFLG; //ログインした管理者フラグの確認用
 
@@ -46,9 +47,19 @@ namespace CTMENU_メインメニュー
         }
 
 
-
+        //////////////////////////////////////////////////
+        //ファンクションキー処理                        //
+        //////////////////////////////////////////////////
         private void CTMENU_KeyDown(object sender, KeyEventArgs e)
         {
+            switch (e.KeyCode){
+                case Keys.F1:
+                    //終了処理
+                    this.Close();
+                    break;
+
+
+            }
 
         }
 
@@ -58,6 +69,9 @@ namespace CTMENU_メインメニュー
         //////////////////////////////////////////////////
         private void MainButton_Click(object sender, EventArgs e)
         {
+
+            if (sender.Equals(this.btnEnd)) { this.Close();} //終了処理
+
             //メインボタン：受注処理を押下
             if (sender.Equals(this.btnMain01))
             {
@@ -78,7 +92,7 @@ namespace CTMENU_メインメニュー
             {
                 btnSub01.Text = "部品仮登録"; btnSub01.Visible = true; //ボタン１設定
                 btnSub02.Text = "部品本登録"; btnSub02.Visible = true; //ボタン２設定
-                btnSub03.Text = ""; btnSub03.Visible = false; //ボタン３設定
+                btnSub03.Text = "製品生産"; btnSub03.Visible = true; //ボタン３設定
                 btnSub04.Text = ""; btnSub04.Visible = false; //ボタン４設定
                 btnSub05.Text = ""; btnSub05.Visible = false; //ボタン５設定
                 btnSub06.Text = ""; btnSub06.Visible = false; //ボタン６設定
@@ -160,6 +174,7 @@ namespace CTMENU_メインメニュー
             //サブボタン３処理
             if (sender.Equals(this.btnSub03)){
                 if (btnSub03.Text == "部品分類マスタ") { CT004.ShowDialog(); }
+                if (btnSub03.Text == "製品生産") { CT012.ShowDialog(); }
 
             }
 
@@ -224,6 +239,7 @@ namespace CTMENU_メインメニュー
             if (strPublicAdminFLG == "0") { btnMain05.Enabled = false; }
 
         }
+
 
 
     }
