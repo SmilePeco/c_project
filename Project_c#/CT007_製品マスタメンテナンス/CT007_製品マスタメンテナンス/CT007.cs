@@ -44,7 +44,9 @@ namespace CT007_製品マスタメンテナンス
 
             if (sender.Equals(this.btnSearch)) { Search_Main(); } //検索処理
             if (sender.Equals(this.btnSubmit)) { Submit_Main(); } //更新処理
+            if (sender.Equals(this.btnDelete)) { Delete_Main(); } //削除処理
             if (sender.Equals(this.btnClear)) { smClear(); } //クリア処理
+            if (sender.Equals(this.btnEnd)) { this.Close(); } //終了処理
 
             //製品コード検索ボタン押下
             if (sender.Equals(this.btnSearchProductCodeSearch)){
@@ -127,6 +129,11 @@ namespace CT007_製品マスタメンテナンス
                 case Keys.F4:
                     //クリア処理
                     smClear();
+                    break;
+
+                case Keys.F5:
+                    //終了処理
+                    this.Close();
                     break;
             }
 
