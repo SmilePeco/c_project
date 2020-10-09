@@ -25,7 +25,6 @@ namespace CT012_製品生産画面
         {
             //クリア処理
             smClear();
-            //増やしました
              
         }
 
@@ -89,6 +88,8 @@ namespace CT012_製品生産画面
 
             }
 
+            //プルリクエスト用：ここから
+            //検索部品１～３はコピペコードなので、集約する。
 
             //使用部品１検索ボタン押下
             if (sender.Equals(this.btnInputPartsMSSearch1))
@@ -147,6 +148,7 @@ namespace CT012_製品生産画面
                 }
             }
 
+            //プルリクエスト用：ここまで
 
 
         }
@@ -170,6 +172,10 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         private void txtSubmitNumber_Leave(object sender, EventArgs e)
         {
+
+            //プルリクエスト用：ここから
+            //使用数１～３はコピペコードなので、集約する。
+
             ////生産数からフォーカスが外れたときは、使用数を再計算する
             //空の場合は計算しない
             if (txtSubmitNumber.Text.Trim() != ""){
@@ -190,6 +196,9 @@ namespace CT012_製品生産画面
             }
 
 
+            //プルリクエスト用：ここまで
+
+
         }
 
 
@@ -202,6 +211,10 @@ namespace CT012_製品生産画面
             string strPartsCode1 = "", strPartsName1 = "", strPartsCode2 = "", strPartsName2 = "", strPartsCode3 = "", strPartsName3 = "";
             //値をrefで受け取る
             if(true == SearchClass.Search_Main(txtSearchProductCode.Text.Trim(), ref strPartsCode1, ref strPartsName1, ref strPartsCode2, ref strPartsName2, ref strPartsCode3, ref strPartsName3)){
+
+                //プルリクエスト用：ここから
+                //コピペコードなので、集約する。
+
                 //受け取った値を代入
                 txtInputPartsCode1.Text = strPartsCode1; lblInputPartsName1.Text = strPartsName1;
                 txtInputPartsCode2.Text = strPartsCode2; lblInputPartsName2.Text = strPartsName2;
@@ -212,7 +225,14 @@ namespace CT012_製品生産画面
                 txtOutputPartsCode3.Text = txtInputPartsCode3.Text;
                 if (txtOutputPartsCode1.Text != "") { lblOutputConsumeNumber1.Text = "1"; lblOutputOriginConsumeNumber1.Text = "1"; }
                 if (txtOutputPartsCode2.Text != "") { lblOutputConsumeNumber2.Text = "1"; lblOutputOriginConsumeNumber2.Text = "1"; }
-                if (txtOutputPartsCode3.Text != "") { lblOutputConsumeNumber3.Text = "1"; lblOutputOriginConsumeNumber3.Text = "1"; } 
+                if (txtOutputPartsCode3.Text != "") { lblOutputConsumeNumber3.Text = "1"; lblOutputOriginConsumeNumber3.Text = "1"; }
+
+                //プルリクエスト用：ここまで
+
+
+                //プルリクエスト用：ここから
+                //表示設定は別メソッドに置き換えする。
+                
                 //表示設定
                 btnSearch.Enabled = false;
                 btnSubmit.Enabled = true;
@@ -223,6 +243,10 @@ namespace CT012_製品生産画面
                 if (txtInputPartsCode1.Text.Trim() == "") { btnInputPartsMSSearch1.Enabled = false; } else { btnInputPartsMSSearch1.Enabled = true; }
                 if (txtInputPartsCode2.Text.Trim() == "") { btnInputPartsMSSearch2.Enabled = false; } else { btnInputPartsMSSearch2.Enabled = true; }
                 if (txtInputPartsCode3.Text.Trim() == "") { btnInputPartsMSSearch3.Enabled = false; } else { btnInputPartsMSSearch3.Enabled = true; }
+
+                //プルリクエスト用：ここまで
+            
+            
             }else{
                 MessageBox.Show("入力した製品コードが存在しません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -236,6 +260,9 @@ namespace CT012_製品生産画面
             //変数定義
             CTCommon.ValueCheck ValueCheck = new CTCommon.ValueCheck();
             CheckClass CheckClass = new CheckClass();
+
+            //プルリクエスト用：ここから
+            //コピペコードなので、集約する。
 
             //使用部品１チェック
             if (txtInputPartsCode1.Text.Trim() != ""){
@@ -256,6 +283,12 @@ namespace CT012_製品生産画面
             //更新担当者が存在しない場合はエラー
             if (false == ValueCheck.Check_HumanMS(txtHumanMSNo.Text.Trim())) { MessageBox.Show("入力した更新担当者は存在しません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
 
+            //プルリクエスト用：ここまで
+
+
+
+            //プルリクエスト用：ここから
+            //コピペコードなので、ここも集約したい。他メソッドにする等。
 
             ////使用部品の残数計算チェック処理
             //変数定義
@@ -268,11 +301,19 @@ namespace CT012_製品生産画面
             int.TryParse(txtOutputPartsNumber1.Text, out intOutputPartsNumber1);
             int.TryParse(txtOutputPartsNumber2.Text, out intOutputPartsNumber2);
             int.TryParse(txtOutputPartsNumber3.Text, out intOutputPartsNumber3);
+
+            //プルリクエスト用：ここまで
+
+            //プルリクエスト用：ここから
+            //本処理なので、メソッドの最初の方に配置するべき。
+
             //本処理
             if (false == CheckClass.Check_OuputValues(intOutputConsumeNumber1, lblOutputPartsNo1.Text, intOutputPartsNumber1, intOutputConsumeNumber2, lblOutputPartsNo2.Text, intOutputPartsNumber2, intOutputConsumeNumber3, lblOutputPartsNo3.Text, intOutputPartsNumber3))
             {
                 MessageBox.Show("部品残数の計算時、残数０以下の部品が発生します。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
             }
+
+            //プルリクエスト用：ここまで
 
             //問題なければ、TRUEをかえす
             return true;
@@ -297,6 +338,10 @@ namespace CT012_製品生産画面
                 //チェック処理
                 if (true == Submit_Check()){
                     try{
+
+                        //プルリクエスト用：ここから
+                        //コメントが多すぎる。全体的な見直しが必要。
+                        
                         /////////////////////////
                         //トランザクション開始//
                         /////////////////////////
@@ -485,6 +530,7 @@ namespace CT012_製品生産画面
 
 
 
+                        //プルリクエスト用：ここまで
 
                     }catch (Exception e){
                         tran.Rollback();
