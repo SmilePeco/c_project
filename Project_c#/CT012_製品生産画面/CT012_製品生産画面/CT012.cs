@@ -61,7 +61,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //ボタンクリック処理                            //
         //////////////////////////////////////////////////
-        private void Button_Click(object sender, EventArgs e){
+        private void Button_Click(object sender, EventArgs e){ //プルリクエスト用：CT012_ButtonClickとする
 
             if (sender.Equals(this.btnSearch)) { Search_Main(); } //検索メイン処理
             if (sender.Equals(this.btnSubmit)) { Submit_Main(); } //登録メイン処理
@@ -69,6 +69,7 @@ namespace CT012_製品生産画面
             if (sender.Equals(this.btnEnd)) { this.Close(); } //終了処理
 
 
+            //プルリクエスト用：変数定義はメソッドの最初で行う。
 
             //製品コード検索ボタン押下
             if (sender.Equals(this.btnSearchProductMSSearch)){
@@ -157,8 +158,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //テキストボックス 数値のみ入力可能 制御処理    //
         //////////////////////////////////////////////////
-        private void Text_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void Text_KeyPress(object sender, KeyPressEventArgs e){ //プルリクエスト用：CT012_KeyPress_Textとする
             //0～9と、バックスペース以外の時は、イベントをキャンセルする
             if ((e.KeyChar < '0' || '9' < e.KeyChar) && e.KeyChar != '\b')
             {
@@ -170,8 +170,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //生産数 Leave処理                              //
         //////////////////////////////////////////////////
-        private void txtSubmitNumber_Leave(object sender, EventArgs e)
-        {
+        private void txtSubmitNumber_Leave(object sender, EventArgs e){ //プルリクエスト用：CT012_Leave_txtSubmitNumberとする
 
             //プルリクエスト用：ここから
             //使用数１～３はコピペコードなので、集約する。
@@ -205,7 +204,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //検索メイン処理                                //
         //////////////////////////////////////////////////
-        private void Search_Main(){
+        private void Search_Main(){ //プルリクエスト用：CT012_Searchとする
             //変数定義
             SearchClass SearchClass = new SearchClass();
             string strPartsCode1 = "", strPartsName1 = "", strPartsCode2 = "", strPartsName2 = "", strPartsCode3 = "", strPartsName3 = "";
@@ -245,18 +244,19 @@ namespace CT012_製品生産画面
                 if (txtInputPartsCode3.Text.Trim() == "") { btnInputPartsMSSearch3.Enabled = false; } else { btnInputPartsMSSearch3.Enabled = true; }
 
                 //プルリクエスト用：ここまで
-            
-            
-            }else{
+
+
+            }else{ //プルリクエスト用：先頭にもってくる
                 MessageBox.Show("入力した製品コードが存在しません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             }
         }
 
+        //プルリクエスト用：Searchクラスの中に収めてしまったほうがよいかもしれない。
         //////////////////////////////////////////////////
         //更新前チェック処理                            //
         //////////////////////////////////////////////////
-        private Boolean Submit_Check(){
+        private Boolean Submit_Check(){ //プルリクエスト用：CT012_Submit_Checkとする
             //変数定義
             CTCommon.ValueCheck ValueCheck = new CTCommon.ValueCheck();
             CheckClass CheckClass = new CheckClass();
@@ -323,7 +323,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //更新メイン処理                                //
         //////////////////////////////////////////////////
-        private void Submit_Main(){
+        private void Submit_Main(){ //プルリクエスト用：CT012_Submitとする
             //変数定義
             SubmitClass SubmitClass = new SubmitClass();
             SqlTransaction tran = null;
@@ -552,7 +552,10 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //クリア処理                                    //
         //////////////////////////////////////////////////
-        private void smClear() {
+        private void smClear(){ //プルリクエスト用：CT012_Clearとする
+
+            //プルリクエスト用：ここも集約したい
+
             //テキストボックス初期化
             txtSearchProductCode.Clear();
             txtInputPartsCode1.Clear();

@@ -9,11 +9,14 @@ namespace CT012_製品生産画面
     class CheckClass
     {
 
+        //プルリクエスト用：引数が多い
         //////////////////////////////////////////////////
         //使用部品の残数計算チェック処理                //
         //////////////////////////////////////////////////
         public Boolean Check_OuputValues(int intOutputConsumeNumber1, string strOutputPartsNo1, int intOutputPartsNumber1, int intOutputConsumeNumber2, string strOutputPartsNo2, int intOutputPartsNumber2, int intOutputConsumeNumber3, string strOutputPartsNo3, int intOutputPartsNumber3){
 
+
+            //プルリクエスト用：コメントが多い
 
             ////使用部品コード１の計算（使用数が空白なら無視）
             if (intOutputConsumeNumber1 != 0){
