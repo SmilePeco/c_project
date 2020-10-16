@@ -8,17 +8,16 @@ using System.Windows.Forms;
 
 namespace CT012_製品生産画面
 {
-    class SearchClass
+    class Search
     {
         public string strSQL;
 
         //////////////////////////////////////////////////
         //検索メイン処理                                //
         //////////////////////////////////////////////////
-        public Boolean Search_Main(string strProductCode, ref string strUsePartsCode1, ref string strUsePartsName1, ref string strUsePartsCode2, ref string strUsePartsName2, ref string strUsePartsCode3, ref string strUsePartsName3)
+        public Boolean Main(string strProductCode, ref string[] PartsCode, ref string[] PartsName)
         {
             //変数定義
-            var array = new string[6];
             SqlCommand cd = null;
             SqlDataReader dtReader;
             //SQL発行
@@ -45,28 +44,25 @@ namespace CT012_製品生産画面
             cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
             CTCommon.DBConnect.cn.Open();
             dtReader = cd.ExecuteReader();
+
+            //if (dtReader.HasRows || dtReader.Read()){
             if (dtReader.HasRows){
-                if (dtReader.Read()){
-                    strUsePartsCode1 = dtReader["使用部品コード1"].ToString().Trim();
-                    strUsePartsName1 = dtReader["使用部品名1"].ToString().Trim();
-                    strUsePartsCode2 = dtReader["使用部品コード2"].ToString().Trim();
-                    strUsePartsName2 = dtReader["使用部品名2"].ToString().Trim();
-                    strUsePartsCode3 = dtReader["使用部品コード3"].ToString().Trim();
-                    strUsePartsName3 = dtReader["使用部品名3"].ToString().Trim();
+                //if (dtReader.Read()){
+                dtReader.Read();
+                for(int i = 1; i <= 3; i++){
+                    PartsCode[i] = dtReader["使用部品コード" + i].ToString().Trim();
+                    PartsName[i] = dtReader["使用部品名" + i].ToString().Trim();
                 }
+                //}
 
                 //クローズ処理
                 dtReader.Close();
                 CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
                 return true;
-
-
             }else{
                 dtReader.Close();
                 CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
                 return false;
-
-
             }
         }
 

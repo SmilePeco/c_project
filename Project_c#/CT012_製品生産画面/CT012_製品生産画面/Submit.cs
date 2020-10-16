@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace CT012_製品生産画面
 {
-    class SubmitClass
+    class Submit
     {
 
         public string strSQL;

@@ -36,12 +36,12 @@ namespace CT012_製品生産画面
             switch (e.KeyCode){
                 case Keys.F1:
                     //検索処理
-                    if (btnSearch.Enabled == true) { Search_Main(); }
+                    if (btnSearch.Enabled == true) { CT012_Search(); }
                     break;
 
                 case Keys.F2:
                     //登録処理
-                    if (btnSubmit.Enabled == true) { Submit_Main(); }
+                    if (btnSubmit.Enabled == true) { CT012_Submit(); }
                     break;
 
                 case Keys.F3:
@@ -63,8 +63,8 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         private void Button_Click(object sender, EventArgs e){ //プルリクエスト用：CT012_ButtonClickとする
 
-            if (sender.Equals(this.btnSearch)) { Search_Main(); } //検索メイン処理
-            if (sender.Equals(this.btnSubmit)) { Submit_Main(); } //登録メイン処理
+            if (sender.Equals(this.btnSearch)) { CT012_Search(); } //検索メイン処理
+            if (sender.Equals(this.btnSubmit)) { CT012_Submit(); } //登録メイン処理
             if (sender.Equals(this.btnClear)) { smClear(); } //クリア処理
             if (sender.Equals(this.btnEnd)) { this.Close(); } //終了処理
 
@@ -92,67 +92,150 @@ namespace CT012_製品生産画面
             //プルリクエスト用：ここから
             //検索部品１～３はコピペコードなので、集約する。
 
-            //使用部品１検索ボタン押下
-            if (sender.Equals(this.btnInputPartsMSSearch1))
-            {
-                //変数定義
-                CTCommon.CTPartsNoSearch frmSearch = new CTCommon.CTPartsNoSearch();
-                SearchClass SearchClass = new SearchClass();
-                string strPartsNo1 = frmSearch.Showminiform(txtInputPartsCode1.Text);
-                if ((strPartsNo1 != "") && (strPartsNo1 != null)){
-                    lblOutputPartsNo1.Text = strPartsNo1;
+            //①まずはボタンの名前を取得する
+            Button btn = sender as Button;
+            string ClickButtonName = btn.Name;
+            //string a = "";
+            //int b = 0;
 
-                    //登録数の取得
-                    string strPartsNumber1 = SearchClass.Search_OutputPartsNumber(lblOutputPartsNo1.Text);
-                    txtOutputPartsNumber1.Text = strPartsNumber1;
-                    //表示設定
-                    lblInputStatus1.Text = "設定済";
-                    lblInputPartsNo1.Text = lblOutputPartsNo1.Text;
+            //②取得したボタン名から→ローカル変数の設定をするような別クラスを作成する
+            //ローカル変数は、strPartsNo1、lblOutputPartsNo1、strPartsNumber1、txtOutputPartsNumber1を設定する必要がある。
 
-                }
+            //クリック処理は呼び出すだけにしたい
+            //クリック内部処理は別メソッドに分けた。（メソッド抽出）
+
+            if (ClickButtonName == "btnInputPartsMSSearch1" || 
+                ClickButtonName == "btnInputPartsMSSearch2" ||
+                ClickButtonName == "btnInputPartsMSSearch3"){
+
+                    //Button_InputParts(ClickButtonName, ClickButtonName + ".Text", ref a, ref b);
+                    Button_InputParts(ClickButtonName);
+
+
+            }
+
+            
+
+
+
+
+            ////使用部品１検索ボタン押下
+            //if (sender.Equals(this.btnInputPartsMSSearch1))
+            //{
+            //    //変数定義
+            //    CTCommon.CTPartsNoSearch frmSearch = new CTCommon.CTPartsNoSearch();
+            //    Search SearchClass = new Search();
+            //    string strPartsNo1 = frmSearch.Showminiform(txtInputPartsCode1.Text);
+            //    if ((strPartsNo1 != "") && (strPartsNo1 != null)){
+            //        lblOutputPartsNo1.Text = strPartsNo1;
+
+            //        //登録数の取得
+            //        string strPartsNumber1 = SearchClass.Search_OutputPartsNumber(lblOutputPartsNo1.Text);
+            //        txtOutputPartsNumber1.Text = strPartsNumber1;
+            //        //表示設定
+            //        lblInputStatus1.Text = "設定済";
+            //        lblInputPartsNo1.Text = lblOutputPartsNo1.Text;
+
+            //    }
  
-            }
+            //}
 
-            //使用部品２検索ボタン押下
-            if (sender.Equals(this.btnInputPartsMSSearch2))
-            {
-                //変数定義
-                CTCommon.CTPartsNoSearch frmSearch = new CTCommon.CTPartsNoSearch();
-                SearchClass SearchClass = new SearchClass();
-                string strPartsNo2 = frmSearch.Showminiform(txtInputPartsCode2.Text);
-                if ((strPartsNo2 != "") && (strPartsNo2 != null)){
-                    lblOutputPartsNo2.Text = strPartsNo2;
-                    //登録数の取得
-                    string strPartsNumber2 = SearchClass.Search_OutputPartsNumber(lblOutputPartsNo2.Text);
-                    txtOutputPartsNumber2.Text = strPartsNumber2;
-                    //表示設定
-                    lblInputStatus2.Text = "設定済";
-                    lblInputPartsNo2.Text = lblOutputPartsNo2.Text;
-                }
-            }
+            ////使用部品２検索ボタン押下
+            //if (sender.Equals(this.btnInputPartsMSSearch2))
+            //{
+            //    //変数定義
+            //    CTCommon.CTPartsNoSearch frmSearch = new CTCommon.CTPartsNoSearch();
+            //    Search SearchClass = new Search();
+            //    string strPartsNo2 = frmSearch.Showminiform(txtInputPartsCode2.Text);
+            //    if ((strPartsNo2 != "") && (strPartsNo2 != null)){
+            //        lblOutputPartsNo2.Text = strPartsNo2;
+            //        //登録数の取得
+            //        string strPartsNumber2 = SearchClass.Search_OutputPartsNumber(lblOutputPartsNo2.Text);
+            //        txtOutputPartsNumber2.Text = strPartsNumber2;
+            //        //表示設定
+            //        lblInputStatus2.Text = "設定済";
+            //        lblInputPartsNo2.Text = lblOutputPartsNo2.Text;
+            //    }
+            //}
 
-            //使用部品３検索ボタン押下
-            if (sender.Equals(this.btnInputPartsMSSearch3))
-            {
-                //変数定義
-                CTCommon.CTPartsNoSearch frmSearch = new CTCommon.CTPartsNoSearch();
-                SearchClass SearchClass = new SearchClass();
-                string strPartsNo3 = frmSearch.Showminiform(txtInputPartsCode3.Text);
-                if ((strPartsNo3 != "") && (strPartsNo3 != null)){
-                    lblOutputPartsNo3.Text = strPartsNo3;
-                    //登録数の取得
-                    string strPartsNumber3 = SearchClass.Search_OutputPartsNumber(lblOutputPartsNo3.Text);
-                    txtOutputPartsNumber3.Text = strPartsNumber3;
-                    //表示設定
-                    lblInputStatus3.Text = "設定済";
-                    lblInputPartsNo3.Text = lblOutputPartsNo3.Text;
-                }
-            }
+            ////使用部品３検索ボタン押下
+            //if (sender.Equals(this.btnInputPartsMSSearch3))
+            //{
+            //    //変数定義
+            //    CTCommon.CTPartsNoSearch frmSearch = new CTCommon.CTPartsNoSearch();
+            //    Search SearchClass = new Search();
+            //    string strPartsNo3 = frmSearch.Showminiform(txtInputPartsCode3.Text);
+            //    if ((strPartsNo3 != "") && (strPartsNo3 != null)){
+            //        lblOutputPartsNo3.Text = strPartsNo3;
+            //        //登録数の取得
+            //        string strPartsNumber3 = SearchClass.Search_OutputPartsNumber(lblOutputPartsNo3.Text);
+            //        txtOutputPartsNumber3.Text = strPartsNumber3;
+            //        //表示設定
+            //        lblInputStatus3.Text = "設定済";
+            //        lblInputPartsNo3.Text = lblOutputPartsNo3.Text;
+            //    }
+            //}
 
             //プルリクエスト用：ここまで
 
 
         }
+
+        //////////////////////////////////////////////////
+        //使用部品検索ボタン　内部処理                  //
+        //////////////////////////////////////////////////
+        private void Button_InputParts(string ButtonName)
+        {
+
+            //変数定義
+            CTCommon.CTPartsNoSearch frmSearch = new CTCommon.CTPartsNoSearch();
+            Search Search = new Search();
+            string OutputPartsNo;
+
+            if (ButtonName == "btnInputPartsMSSearch1")
+            {
+                OutputPartsNo = frmSearch.Showminiform(txtInputPartsCode1.Text);
+                if (OutputPartsNo != null)
+                {
+                    lblInputStatus1.Text = "設定済";
+                    lblInputPartsNo1.Text = OutputPartsNo;
+                    lblOutputPartsNo1.Text = OutputPartsNo;
+                    txtOutputPartsNumber1.Text = Search.Search_OutputPartsNumber(OutputPartsNo);
+                }
+
+            }
+            else if (ButtonName == "btnInputPartsMSSearch2")
+            {
+                OutputPartsNo = frmSearch.Showminiform(txtInputPartsCode2.Text);
+                if (OutputPartsNo != null)
+                {
+                    lblInputStatus2.Text = "設定済";
+                    lblInputPartsNo2.Text = OutputPartsNo;
+                    lblOutputPartsNo2.Text = OutputPartsNo;
+                    txtOutputPartsNumber2.Text = Search.Search_OutputPartsNumber(OutputPartsNo);
+                }
+
+            }
+            else if (ButtonName == "btnInputPartsMSSearch3")
+            {
+                OutputPartsNo = frmSearch.Showminiform(txtInputPartsCode3.Text);
+                if (OutputPartsNo != null)
+                {
+                    lblInputStatus3.Text = "設定済";
+                    lblInputPartsNo3.Text = OutputPartsNo;
+                    lblOutputPartsNo3.Text = OutputPartsNo;
+                    txtOutputPartsNumber3.Text = Search.Search_OutputPartsNumber(OutputPartsNo);
+                }
+            }
+        }
+            
+
+
+
+
+
+
+
 
 
         //////////////////////////////////////////////////
@@ -170,7 +253,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //生産数 Leave処理                              //
         //////////////////////////////////////////////////
-        private void txtSubmitNumber_Leave(object sender, EventArgs e){ //プルリクエスト用：CT012_Leave_txtSubmitNumberとする
+        private void txtSubmitNumber_Leave(object sender, EventArgs e){ //プルリクエスト用：CT012_Leaveとする
 
             //プルリクエスト用：ここから
             //使用数１～３はコピペコードなので、集約する。
@@ -204,24 +287,24 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //検索メイン処理                                //
         //////////////////////////////////////////////////
-        private void Search_Main(){ //プルリクエスト用：CT012_Searchとする
+        private void CT012_Search(){ //【完了】プルリクエスト用：CT012_Searchとする
             //変数定義
-            SearchClass SearchClass = new SearchClass();
-            string strPartsCode1 = "", strPartsName1 = "", strPartsCode2 = "", strPartsName2 = "", strPartsCode3 = "", strPartsName3 = "";
-            //値をrefで受け取る
-            if(true == SearchClass.Search_Main(txtSearchProductCode.Text.Trim(), ref strPartsCode1, ref strPartsName1, ref strPartsCode2, ref strPartsName2, ref strPartsCode3, ref strPartsName3)){
+            Search Search = new Search();
+            string[] PartsCode; string[] PartsName;
+            PartsCode = new string[4]; PartsName = new string[4]; 
+            if(true == Search.Main(txtSearchProductCode.Text.Trim(), ref PartsCode, ref PartsName)){
 
-                //プルリクエスト用：ここから
+                //【完了】プルリクエスト用：ここから
                 //コピペコードなので、集約する。
 
-                //受け取った値を代入
-                txtInputPartsCode1.Text = strPartsCode1; lblInputPartsName1.Text = strPartsName1;
-                txtInputPartsCode2.Text = strPartsCode2; lblInputPartsName2.Text = strPartsName2;
-                txtInputPartsCode3.Text = strPartsCode3; lblInputPartsName3.Text = strPartsName3;
-                //Outputにも値を代入
-                txtOutputPartsCode1.Text = txtInputPartsCode1.Text;
-                txtOutputPartsCode2.Text = txtInputPartsCode2.Text;
-                txtOutputPartsCode3.Text = txtInputPartsCode3.Text;
+                for (int i = 1; i <= 3; i++){
+                    Control[] InputPartsCode = this.Controls.Find("txtInputPartsCode" + i, true);
+                    Control[] OutputPartsCode = this.Controls.Find("txtOutputPartsCode" + i, true);
+                    Control[] InputPartsName = this.Controls.Find("lblInputPartsName" + i, true);
+                    InputPartsCode[0].Text = PartsCode[i];
+                    OutputPartsCode[0].Text = PartsCode[i];
+                    InputPartsName[0].Text = PartsName[i];
+                }
                 if (txtOutputPartsCode1.Text != "") { lblOutputConsumeNumber1.Text = "1"; lblOutputOriginConsumeNumber1.Text = "1"; }
                 if (txtOutputPartsCode2.Text != "") { lblOutputConsumeNumber2.Text = "1"; lblOutputOriginConsumeNumber2.Text = "1"; }
                 if (txtOutputPartsCode3.Text != "") { lblOutputConsumeNumber3.Text = "1"; lblOutputOriginConsumeNumber3.Text = "1"; }
@@ -259,23 +342,30 @@ namespace CT012_製品生産画面
         private Boolean Submit_Check(){ //プルリクエスト用：CT012_Submit_Checkとする
             //変数定義
             CTCommon.ValueCheck ValueCheck = new CTCommon.ValueCheck();
-            CheckClass CheckClass = new CheckClass();
+            Check Check = new Check();
 
             //プルリクエスト用：ここから
             //コピペコードなので、集約する。
 
-            //使用部品１チェック
-            if (txtInputPartsCode1.Text.Trim() != ""){
-                if (lblInputStatus1.Text == "") { MessageBox.Show("使用部品１が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
-            }
-            //使用部品２チェック
-            if (txtInputPartsCode2.Text.Trim() != ""){
-                if (lblInputStatus2.Text == "") { MessageBox.Show("使用部品２が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
-            }
-            //使用部品３チェック
-            if (txtInputPartsCode3.Text.Trim() != ""){
-                if (lblInputStatus3.Text == "") { MessageBox.Show("使用部品３が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
-            }
+            //使用部品チェック
+            if (txtInputPartsCode1.Text.Trim() != "" && lblInputStatus1.Text == "") { MessageBox.Show("使用部品１が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
+            if (txtInputPartsCode2.Text.Trim() != "" && lblInputStatus2.Text == "") { MessageBox.Show("使用部品２が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
+            if (txtInputPartsCode3.Text.Trim() != "" && lblInputStatus3.Text == "") { MessageBox.Show("使用部品３が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
+
+
+
+            ////使用部品１チェック
+            //if (txtInputPartsCode1.Text.Trim() != ""){
+            //    if (lblInputStatus1.Text == "") { MessageBox.Show("使用部品１が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
+            //}
+            ////使用部品２チェック
+            //if (txtInputPartsCode2.Text.Trim() != ""){
+            //    if (lblInputStatus2.Text == "") { MessageBox.Show("使用部品２が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
+            //}
+            ////使用部品３チェック
+            //if (txtInputPartsCode3.Text.Trim() != ""){
+            //    if (lblInputStatus3.Text == "") { MessageBox.Show("使用部品３が設定されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
+            //}
 
             //生産数が０か、空白の場合はエラー
             if (txtSubmitNumber.Text.Trim() == "0" || txtSubmitNumber.Text.Trim() == "") { MessageBox.Show("生産数が入力されていません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
@@ -290,28 +380,52 @@ namespace CT012_製品生産画面
             //プルリクエスト用：ここから
             //コピペコードなので、ここも集約したい。他メソッドにする等。
 
-            ////使用部品の残数計算チェック処理
-            //変数定義
-            int intOutputConsumeNumber1 = 0; int intOutputConsumeNumber2 = 0; int intOutputConsumeNumber3 = 0;
-            int intOutputPartsNumber1 = 0; int intOutputPartsNumber2 = 0; int intOutputPartsNumber3 = 0;
-            //文字列→数値変換処理
-            int.TryParse(lblOutputConsumeNumber1.Text, out intOutputConsumeNumber1);
-            int.TryParse(lblOutputConsumeNumber2.Text, out intOutputConsumeNumber2);
-            int.TryParse(lblOutputConsumeNumber3.Text, out intOutputConsumeNumber3);
-            int.TryParse(txtOutputPartsNumber1.Text, out intOutputPartsNumber1);
-            int.TryParse(txtOutputPartsNumber2.Text, out intOutputPartsNumber2);
-            int.TryParse(txtOutputPartsNumber3.Text, out intOutputPartsNumber3);
+            //【説明】:ラベル値→数値の変換をする。
+            var lblConsumeNumber = new string[] { lblOutputConsumeNumber1.Text, lblOutputConsumeNumber2.Text, lblOutputConsumeNumber3.Text };
+            var txtPartsNumber = new string[] { txtOutputPartsNumber1.Text, txtOutputPartsNumber2.Text, txtOutputPartsNumber3.Text };
+            int[] OutputConsume = new int[3];
+            int[] OutputParts = new int[3];
 
+            for (int i = 0; i <= 2; i++){
+                if (lblConsumeNumber[i] == "") { OutputConsume[i] = 0; } else { OutputConsume[i] = Convert.ToInt32(lblConsumeNumber[i]); }
+                if (txtPartsNumber[i] == "") { OutputParts[i] = 0; } else { OutputParts[i] = Convert.ToInt32(txtPartsNumber[i]); }
+            }
+
+            //【説明】:入力生産数＞使用数の確認をする。
+            var lblPartsNo = new string[] { lblOutputPartsNo1.Text, lblOutputPartsNo2.Text, lblOutputPartsNo3.Text };
+
+            if (false == Check.OuputValues(OutputConsume, lblPartsNo, OutputParts))
+            {
+                MessageBox.Show("部品残数の計算時、残数０以下の部品が発生します。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
+            }
+
+            //if (lblOutputConsumeNumber1.Text == "") { int OutputConsume1 = 0; } else { int OutputConsume1 = Convert.ToInt32(lblOutputConsumeNumber2.Text); }
+            //int intOutputConsumeNumber2 = Convert.ToInt32(lblOutputConsumeNumber2.Text);
+            //int intOutputConsumeNumber3 = Convert.ToInt32(lblOutputConsumeNumber3.Text);
+
+            //使用部品の残数計算チェック処理
+            //変数定義
+            //int intOutputConsumeNumber1 = 0;
+            //int intOutputConsumeNumber2 = 0; int intOutputConsumeNumber3 = 0;
+            //int intOutputPartsNumber1 = 0; int intOutputPartsNumber2 = 0; int intOutputPartsNumber3 = 0;
+            //文字列→数値変換処理
+            //int.TryParse(lblOutputConsumeNumber1.Text, out intOutputConsumeNumber1);
+            //int.TryParse(lblOutputConsumeNumber2.Text, out intOutputConsumeNumber2);
+            //int.TryParse(lblOutputConsumeNumber3.Text, out intOutputConsumeNumber3);
+            //int.TryParse(txtOutputPartsNumber1.Text, out intOutputPartsNumber1);
+            //int.TryParse(txtOutputPartsNumber2.Text, out intOutputPartsNumber2);
+            //int.TryParse(txtOutputPartsNumber3.Text, out intOutputPartsNumber3);
+            
             //プルリクエスト用：ここまで
 
             //プルリクエスト用：ここから
             //本処理なので、メソッドの最初の方に配置するべき。
 
             //本処理
-            if (false == CheckClass.Check_OuputValues(intOutputConsumeNumber1, lblOutputPartsNo1.Text, intOutputPartsNumber1, intOutputConsumeNumber2, lblOutputPartsNo2.Text, intOutputPartsNumber2, intOutputConsumeNumber3, lblOutputPartsNo3.Text, intOutputPartsNumber3))
-            {
-                MessageBox.Show("部品残数の計算時、残数０以下の部品が発生します。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
-            }
+            //if (false == CheckClass.Check_OuputValues(intOutputConsumeNumber1, lblOutputPartsNo1.Text, intOutputPartsNumber1, intOutputConsumeNumber2, lblOutputPartsNo2.Text, intOutputPartsNumber2, intOutputConsumeNumber3, lblOutputPartsNo3.Text, intOutputPartsNumber3))
+            //{
+            //    MessageBox.Show("部品残数の計算時、残数０以下の部品が発生します。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
+            //}
 
             //プルリクエスト用：ここまで
 
@@ -323,9 +437,9 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //更新メイン処理                                //
         //////////////////////////////////////////////////
-        private void Submit_Main(){ //プルリクエスト用：CT012_Submitとする
+        private void CT012_Submit(){ //プルリクエスト用：CT012_Submitとする
             //変数定義
-            SubmitClass SubmitClass = new SubmitClass();
+            Submit Submit = new Submit();
             SqlTransaction tran = null;
             SqlCommand cd = null;
             string strSQL;
@@ -352,7 +466,7 @@ namespace CT012_製品生産画面
                         if (txtOutputPartsCode1.Text.Trim() != ""){
                             ////PARTS_TBL、PARTS_HISTORY_TBL////
                             //SQL発行
-                            strSQL = SubmitClass.Submit_Calc_PartsTBL(tran, lblOutputPartsNo1.Text, lblOutputConsumeNumber1.Text);
+                            strSQL = Submit.Submit_Calc_PartsTBL(tran, lblOutputPartsNo1.Text, lblOutputConsumeNumber1.Text);
                             //計算結果が、削除処理か判定する
                             if (strSQL != "DELETE"){
                                 //DELETE指示以外は通常とおりに更新処理
@@ -364,14 +478,14 @@ namespace CT012_製品生産画面
                             }else{
                                 ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
                                 //TABLE_TBL 削除SQL生成
-                                strSQL = SubmitClass.Submit_PartsTBLDelete(lblOutputPartsNo1.Text);
+                                strSQL = Submit.Submit_PartsTBLDelete(lblOutputPartsNo1.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                                 //更新処理
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
                                 //TABLE_HISTORY_TBL 削除SQL生成
-                                strSQL = SubmitClass.Submit_PartsHistoryTBLDelete(lblOutputPartsNo1.Text);
+                                strSQL = Submit.Submit_PartsHistoryTBLDelete(lblOutputPartsNo1.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                                 //更新処理
                                 cd.Transaction = tran;
@@ -382,10 +496,10 @@ namespace CT012_製品生産画面
 
                             ////PARTS_CONSUME_HISTORY_TBL////
                             //部品消費履歴マスタのMAX値、残数の取得
-                            int intConsumeNo = SubmitClass.Submit_PartsConsumeMAX(tran);
-                            int intReNumber = SubmitClass.Submit_PartsTBLReNumber(tran, lblOutputPartsNo1.Text);
+                            int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
+                            int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo1.Text);
                             //SQL発行
-                            strSQL = SubmitClass.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo1.Text.Trim(), txtOutputPartsCode1.Text.Trim(), intReNumber, lblOutputConsumeNumber1.Text.Trim(), txtHumanMSNo.Text.Trim());
+                            strSQL = Submit.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo1.Text.Trim(), txtOutputPartsCode1.Text.Trim(), intReNumber, lblOutputConsumeNumber1.Text.Trim(), txtHumanMSNo.Text.Trim());
                             cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                             //更新処理
                             cd.Transaction = tran;
@@ -397,7 +511,7 @@ namespace CT012_製品生産画面
                         if (txtOutputPartsCode2.Text.Trim() != ""){
                             ////PARTS_TBL////
                             //SQL発行
-                            strSQL = SubmitClass.Submit_Calc_PartsTBL(tran, lblOutputPartsNo2.Text, lblOutputConsumeNumber2.Text);
+                            strSQL = Submit.Submit_Calc_PartsTBL(tran, lblOutputPartsNo2.Text, lblOutputConsumeNumber2.Text);
                             //計算結果が、削除処理か判定する
                             if (strSQL != "DELETE")
                             {
@@ -410,14 +524,14 @@ namespace CT012_製品生産画面
                             }else{
                                 ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
                                 //TABLE_TBL 削除SQL生成
-                                strSQL = SubmitClass.Submit_PartsTBLDelete(lblOutputPartsNo2.Text);
+                                strSQL = Submit.Submit_PartsTBLDelete(lblOutputPartsNo2.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                                 //更新処理
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
                                 //TABLE_HISTORY_TBL 削除SQL生成
-                                strSQL = SubmitClass.Submit_PartsHistoryTBLDelete(lblOutputPartsNo2.Text);
+                                strSQL = Submit.Submit_PartsHistoryTBLDelete(lblOutputPartsNo2.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                                 //更新処理
                                 cd.Transaction = tran;
@@ -430,10 +544,10 @@ namespace CT012_製品生産画面
 
                             ////PARTS_CONSUME_HISTORY_TBL////
                             //部品消費履歴マスタのMAX値、消費残数の取得
-                            int intConsumeNo = SubmitClass.Submit_PartsConsumeMAX(tran);
-                            int intReNumber = SubmitClass.Submit_PartsTBLReNumber(tran, lblOutputPartsNo2.Text);
+                            int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
+                            int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo2.Text);
                             //SQL発行
-                            strSQL = SubmitClass.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo2.Text.Trim(), txtOutputPartsCode2.Text.Trim(), intReNumber, lblOutputConsumeNumber2.Text.Trim(), txtHumanMSNo.Text.Trim());
+                            strSQL = Submit.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo2.Text.Trim(), txtOutputPartsCode2.Text.Trim(), intReNumber, lblOutputConsumeNumber2.Text.Trim(), txtHumanMSNo.Text.Trim());
                             cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                             //更新処理
                             cd.Transaction = tran;
@@ -445,7 +559,7 @@ namespace CT012_製品生産画面
                         //使用部品３の計算（使用部品が空欄の場合は計算しない）
                         if (txtOutputPartsCode3.Text.Trim() != ""){
                             //SQL発行
-                            strSQL = SubmitClass.Submit_Calc_PartsTBL(tran, lblOutputPartsNo3.Text, lblOutputConsumeNumber3.Text);
+                            strSQL = Submit.Submit_Calc_PartsTBL(tran, lblOutputPartsNo3.Text, lblOutputConsumeNumber3.Text);
                             //計算結果が、削除処理か判定する
                             if (strSQL != "DELETE")
                             {
@@ -458,14 +572,14 @@ namespace CT012_製品生産画面
                             }else{
                                 ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
                                 //TABLE_TBL 削除SQL生成
-                                strSQL = SubmitClass.Submit_PartsTBLDelete(lblOutputPartsNo3.Text);
+                                strSQL = Submit.Submit_PartsTBLDelete(lblOutputPartsNo3.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                                 //更新処理
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
                                 //TABLE_HISTORY_TBL 削除SQL生成
-                                strSQL = SubmitClass.Submit_PartsHistoryTBLDelete(lblOutputPartsNo3.Text);
+                                strSQL = Submit.Submit_PartsHistoryTBLDelete(lblOutputPartsNo3.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                                 //更新処理
                                 cd.Transaction = tran;
@@ -474,10 +588,10 @@ namespace CT012_製品生産画面
 
                             ////PARTS_CONSUME_HISTORY_TBL////
                             //部品消費履歴マスタのMAX値、残数の取得
-                            int intConsumeNo = SubmitClass.Submit_PartsConsumeMAX(tran);
-                            int intReNumber = SubmitClass.Submit_PartsTBLReNumber(tran, lblOutputPartsNo3.Text);
+                            int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
+                            int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo3.Text);
                             //SQL発行
-                            strSQL = SubmitClass.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo3.Text.Trim(), txtOutputPartsCode3.Text.Trim(), intReNumber, lblOutputConsumeNumber3.Text.Trim(), txtHumanMSNo.Text.Trim());
+                            strSQL = Submit.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo3.Text.Trim(), txtOutputPartsCode3.Text.Trim(), intReNumber, lblOutputConsumeNumber3.Text.Trim(), txtHumanMSNo.Text.Trim());
                             cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                             //更新処理
                             cd.Transaction = tran;
@@ -487,9 +601,9 @@ namespace CT012_製品生産画面
                         ////PRODUCT_TBL、PRODUCT_HISTORY_TBL////
                         //PRODUCT_TBL
                         //生産NOのMAX値を取得
-                        int intProductNoMAX = SubmitClass.Submit_ProductNoMAX(tran);
+                        int intProductNoMAX = Submit.Submit_ProductNoMAX(tran);
                         //SQL発行
-                        strSQL = SubmitClass.Submit_ProductTBL(intProductNoMAX, txtSearchProductCode.Text.Trim(), txtSubmitNumber.Text.Trim(), txtHumanMSNo.Text.Trim());
+                        strSQL = Submit.Submit_ProductTBL(intProductNoMAX, txtSearchProductCode.Text.Trim(), txtSubmitNumber.Text.Trim(), txtHumanMSNo.Text.Trim());
                         cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                         //更新処理
                         cd.Transaction = tran;
@@ -497,7 +611,7 @@ namespace CT012_製品生産画面
 
                         //PRODUCT_HISTORY_TBL
                         //SQL発行
-                        strSQL = SubmitClass.Submit_ProductHistoryTBL(intProductNoMAX, txtSearchProductCode.Text.Trim(), txtSubmitNumber.Text.Trim(), dtpSubmit.Text, txtOutputPartsCode1.Text.Trim(), lblOutputPartsNo1.Text.Trim(), txtOutputPartsCode2.Text.Trim(), lblOutputPartsNo2.Text.Trim(), txtOutputPartsCode3.Text.Trim(), lblOutputPartsNo3.Text.Trim(), txtHumanMSNo.Text.Trim());
+                        strSQL = Submit.Submit_ProductHistoryTBL(intProductNoMAX, txtSearchProductCode.Text.Trim(), txtSubmitNumber.Text.Trim(), dtpSubmit.Text, txtOutputPartsCode1.Text.Trim(), lblOutputPartsNo1.Text.Trim(), txtOutputPartsCode2.Text.Trim(), lblOutputPartsNo2.Text.Trim(), txtOutputPartsCode3.Text.Trim(), lblOutputPartsNo3.Text.Trim(), txtHumanMSNo.Text.Trim());
                         cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                         //更新処理
                         cd.Transaction = tran;

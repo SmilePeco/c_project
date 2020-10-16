@@ -33,7 +33,7 @@ namespace CTCommon
                 // データベース接続の準備
                 SqlConnection cn = new SqlConnection(connectionString);
                 // データベースの接続開始
-                cn.Open();
+                //cn.Open();
 
             }
             catch (Exception exception)
