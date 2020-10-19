@@ -308,7 +308,7 @@ namespace CT012_製品生産画面
                             T012_Submit_After_PartsNo1(tran, ref SQL_HISTORYTBL_MaxNo, ref SQL_HISTORYTBL_ReNumber);
 
                             //【説明】：登録・引き算処理を消費履歴に残す
-                            strSQL = Submit.INSERT_PARTS_CONSUME_HISTORY_TBL(tran, SQL_HISTORYTBL_MaxNo[1], ConsumeParts, SQL_HISTORYTBL_ReNumber[1], OthersName);
+                            strSQL = Submit.INSERT_PARTS_CONSUME_HISTORY_TBL(tran, SQL_HISTORYTBL_MaxNo[0], ConsumeParts, SQL_HISTORYTBL_ReNumber[0], OthersName);
                             cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                             cd.Transaction = tran;
                             cd.ExecuteNonQuery();
