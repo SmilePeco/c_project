@@ -150,7 +150,7 @@
             this.btnSearchProductMSSearch.TabIndex = 2;
             this.btnSearchProductMSSearch.Text = "...";
             this.btnSearchProductMSSearch.UseVisualStyleBackColor = true;
-            this.btnSearchProductMSSearch.Click += new System.EventHandler(this.Button_Click);
+            this.btnSearchProductMSSearch.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // label2
             // 
@@ -191,7 +191,7 @@
             this.btnSubmit.TabIndex = 2;
             this.btnSubmit.Text = "F2:登録";
             this.btnSubmit.UseVisualStyleBackColor = true;
-            this.btnSubmit.Click += new System.EventHandler(this.Button_Click);
+            this.btnSubmit.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // btnEnd
             // 
@@ -203,7 +203,7 @@
             this.btnEnd.TabIndex = 4;
             this.btnEnd.Text = "F4:終了";
             this.btnEnd.UseVisualStyleBackColor = true;
-            this.btnEnd.Click += new System.EventHandler(this.Button_Click);
+            this.btnEnd.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // btnClear
             // 
@@ -215,7 +215,7 @@
             this.btnClear.TabIndex = 3;
             this.btnClear.Text = "F3:クリア";
             this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.Button_Click);
+            this.btnClear.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // btnSearch
             // 
@@ -225,7 +225,7 @@
             this.btnSearch.TabIndex = 1;
             this.btnSearch.Text = "F1:検索";
             this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.Button_Click);
+            this.btnSearch.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // groupBox10
             // 
@@ -267,7 +267,7 @@
             this.txtSubmitNumber.Name = "txtSubmitNumber";
             this.txtSubmitNumber.Size = new System.Drawing.Size(91, 19);
             this.txtSubmitNumber.TabIndex = 1;
-            this.txtSubmitNumber.Leave += new System.EventHandler(this.txtSubmitNumber_Leave);
+            this.txtSubmitNumber.Leave += new System.EventHandler(this.CT012_Leave);
             // 
             // dtpSubmit
             // 
@@ -315,7 +315,7 @@
             this.btnHumanMSSearch.TabIndex = 2;
             this.btnHumanMSSearch.Text = "...";
             this.btnHumanMSSearch.UseVisualStyleBackColor = true;
-            this.btnHumanMSSearch.Click += new System.EventHandler(this.Button_Click);
+            this.btnHumanMSSearch.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // groupBox3
             // 
@@ -416,7 +416,7 @@
             this.btnInputPartsMSSearch3.TabIndex = 2;
             this.btnInputPartsMSSearch3.Text = "...";
             this.btnInputPartsMSSearch3.UseVisualStyleBackColor = true;
-            this.btnInputPartsMSSearch3.Click += new System.EventHandler(this.Button_Click);
+            this.btnInputPartsMSSearch3.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // label11
             // 
@@ -509,7 +509,7 @@
             this.btnInputPartsMSSearch2.TabIndex = 2;
             this.btnInputPartsMSSearch2.Text = "...";
             this.btnInputPartsMSSearch2.UseVisualStyleBackColor = true;
-            this.btnInputPartsMSSearch2.Click += new System.EventHandler(this.Button_Click);
+            this.btnInputPartsMSSearch2.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // label10
             // 
@@ -602,7 +602,7 @@
             this.btnInputPartsMSSearch1.TabIndex = 2;
             this.btnInputPartsMSSearch1.Text = "...";
             this.btnInputPartsMSSearch1.UseVisualStyleBackColor = true;
-            this.btnInputPartsMSSearch1.Click += new System.EventHandler(this.Button_Click);
+            this.btnInputPartsMSSearch1.Click += new System.EventHandler(this.CT012_ButtonClick);
             // 
             // label9
             // 
@@ -1043,10 +1043,10 @@
         internal System.Windows.Forms.TextBox txtOutputPartsCode2;
         internal System.Windows.Forms.TextBox txtOutputPartsNumber1;
         internal System.Windows.Forms.Label label24;
-        internal System.Windows.Forms.Label lblOutputPartsNo1;
         internal System.Windows.Forms.Label label22;
         internal System.Windows.Forms.Label label21;
         internal System.Windows.Forms.TextBox txtOutputPartsCode1;
+        public System.Windows.Forms.Label lblOutputPartsNo1;
     }
 }
 
