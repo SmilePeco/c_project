@@ -24,7 +24,7 @@ namespace CT012_製品生産画面
         private void CT012_Load(object sender, EventArgs e)
         {
             //クリア処理
-            smClear();
+            CT012_Clear();
              
         }
 
@@ -46,7 +46,7 @@ namespace CT012_製品生産画面
 
                 case Keys.F3:
                     //クリア処理
-                    smClear();
+                    CT012_Clear();
                     break;
 
                 case Keys.F4:
@@ -65,7 +65,7 @@ namespace CT012_製品生産画面
 
             if (sender.Equals(this.btnSearch)) { CT012_Search(); } //検索メイン処理
             if (sender.Equals(this.btnSubmit)) { CT012_Submit(); } //登録メイン処理
-            if (sender.Equals(this.btnClear)) { smClear(); } //クリア処理
+            if (sender.Equals(this.btnClear)) { CT012_Clear(); } //クリア処理
             if (sender.Equals(this.btnEnd)) { this.Close(); } //終了処理
 
 
@@ -395,7 +395,7 @@ namespace CT012_製品生産画面
                         cd.ExecuteNonQuery();
 
                         MessageBox.Show("登録完了しました。", "登録完了", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                        smClear();
+                        CT012_Clear();
                         tran.Commit();
 
                     }catch (Exception e){
@@ -504,7 +504,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //クリア処理                                    //
         //////////////////////////////////////////////////
-        private void smClear(){ //プルリクエスト用：CT012_Clearとする
+        private void CT012_Clear(){ 
 
             //プルリクエスト用：ここも集約したい
 
