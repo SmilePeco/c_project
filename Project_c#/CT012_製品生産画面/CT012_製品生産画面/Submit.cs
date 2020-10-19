@@ -16,7 +16,8 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //部品登録テーブル 計算判定・SQL生成処理        //
         //////////////////////////////////////////////////
-        public string Submit_Calc_PartsTBL(SqlTransaction tran, string strPartsNo, string strConsumeNumber)
+        //public string JUDGE_PARTS_TBL(SqlTransaction tran, string strPartsNo, string strConsumeNumber)
+        public string JUDGE_PARTS_TBL(SqlTransaction tran,  string strPartsNo, string strConsumeNumber)
         {
             //変数定義
             SqlDataReader dtReader;
@@ -35,44 +36,55 @@ namespace CT012_製品生産画面
             strSQL += " PARTS_TBL ";
             strSQL += "WHERE ";
             strSQL += " 部品登録NO = " + strPartsNo + " ";
-            //SQL実行
-            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-            cd.Transaction = tran;
-            dtReader = cd.ExecuteReader();
-            if (dtReader.Read()) { strCheckValue = dtReader["登録数"].ToString(); }
-            dtReader.Close();
-            //文字列→数値変換
-            int.TryParse(strConsumeNumber, out intConsumeNumber);
-            int.TryParse(strCheckValue, out intCheckValue);
-            ////確認処理
-            if (intCheckValue - intConsumeNumber != 0){
-                //UPDATEで減算処理
-                //SQL発行
-                strSQL = "";
-                strSQL += "UPDATE PARTS_TBL ";
-                strSQL += "SET ";
-                strSQL += " 登録数 -= " + strConsumeNumber + " ";
-                strSQL += "WHERE ";
-                strSQL += " 部品登録NO = " + strPartsNo + " ";
-                //SQLをかえす
+
+            try{
+                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                //CTCommon.DBConnect.cn.Open();
+                cd.Transaction = tran;
+                dtReader = cd.ExecuteReader();
+                if (dtReader.Read()) { strCheckValue = dtReader["登録数"].ToString(); }
+                dtReader.Close();
+                //文字列→数値変換
+                int.TryParse(strConsumeNumber, out intConsumeNumber);
+                int.TryParse(strCheckValue, out intCheckValue);
+                ////確認処理
+                if (intCheckValue - intConsumeNumber != 0)
+                {
+                    //UPDATEで減算処理
+                    //SQL発行
+                    strSQL = "";
+                    strSQL += "UPDATE PARTS_TBL ";
+                    strSQL += "SET ";
+                    strSQL += " 登録数 -= " + intConsumeNumber + " ";
+                    strSQL += "WHERE ";
+                    strSQL += " 部品登録NO = " + strPartsNo + " ";
+                    //SQLをかえす
+                    return strSQL;
+                }else{
+                    //DELETE処理
+                    //DELETE処理の場合は、PARTS_TBLとPARTS_HISTORY_TBLの２つを削除するため、
+                    //一旦そのままかえす
+                    return "DELETE";
+                    //SQL発行
+                    //strSQL = "";
+                    //strSQL += "DELETE FROM PARTS_TBL ";
+                    //strSQL += "WHERE 部品登録NO = " + strPartsNo + " ";
+                    //SQLをかえす
+                }
+            }catch (Exception e){
+                MessageBox.Show(e.Message);
                 return strSQL;
-            }else{
-                //DELETE処理
-                //DELETE処理の場合は、PARTS_TBLとPARTS_HISTORY_TBLの２つを削除するため、
-                //一旦そのままかえす
-                return "DELETE";
-                //SQL発行
-                //strSQL = "";
-                //strSQL += "DELETE FROM PARTS_TBL ";
-                //strSQL += "WHERE 部品登録NO = " + strPartsNo + " ";
-                //SQLをかえす
+
+            }finally{
+                //CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
             }
+
         }
 
         //////////////////////////////////////////////////
         //部品登録テーブル 削除SQL生成処理              //
         //////////////////////////////////////////////////
-        public string Submit_PartsTBLDelete(string strPartsNo){
+        public string DELETE_PARTS_TBL(string strPartsNo){
             //SQL発行
             strSQL = "";
             strSQL += "DELETE FROM PARTS_TBL ";
@@ -84,7 +96,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //部品履歴登録テーブル 削除SQL生成処理          //
         //////////////////////////////////////////////////
-        public string Submit_PartsHistoryTBLDelete(string strPartsNo)
+        public string DELETE_PARTS_HISTORY_TBL(string strPartsNo)
         {
             //SQL発行
             strSQL = "";
@@ -97,18 +109,19 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //部品消費履歴テーブル SQL発行                  //
         //////////////////////////////////////////////////
-        public string Submit_PartsConsume(SqlTransaction tran, int intConsumeNo, string strPartsNo, string strPartsCode, int intReNumber, string strConsumeNumber, string strHumanNo){
-
+        public string INSERT_PARTS_CONSUME_HISTORY_TBL(SqlTransaction tran, int SQL_HISTORYTBL_MaxNo, string[] ConsumeParts, int SQL_HISTORYTBL_ReNumber, string[] OthersName)
+        {
+           
             //SQL発行
             strSQL = "";
             strSQL += "INSERT INTO PARTS_CONSUME_HISTORY_TBL VALUES ";
             strSQL += "( ";
-            strSQL += " " + intConsumeNo +", "; // 部品消費登録NO
-            strSQL += " " + strPartsNo + ", "; //部品登録NO
-            strSQL += " '" + strPartsCode + "', "; //使用部品コード
-            strSQL += " " + strConsumeNumber + ", "; //消費数
-            strSQL += " " + intReNumber +", "; //消費後残数
-            strSQL += " '" + strHumanNo + "', "; //更新担当者
+            strSQL += " " + SQL_HISTORYTBL_MaxNo + ", "; // 部品消費登録NO
+            strSQL += " " + ConsumeParts[0] + ", "; //部品登録NO
+            strSQL += " '" + ConsumeParts[1] + "', "; //使用部品コード
+            strSQL += " " + OthersName[0] + ", "; //消費数
+            strSQL += " " + SQL_HISTORYTBL_ReNumber + ", "; //消費後残数
+            strSQL += " '" + OthersName[1] + "', "; //更新担当者
             strSQL += " SYSDATETIME(), "; //更新日
             strSQL += " SYSDATETIME() "; //登録日
             strSQL += ") ";
@@ -120,41 +133,55 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //部品消費履歴テーブル MAX値取得処理            //
         //////////////////////////////////////////////////
-        public int Submit_PartsConsumeMAX(SqlTransaction tran){
+        //public int Submit_PartsConsumeMAX(SqlTransaction tran){
+        public int Submit_PartsConsumeMAX(SqlTransaction tran)
+        {
             //変数定義
             SqlCommand cd = null;
             SqlDataReader dtReader;
             string strCount = "";
-            int intCount = 0;
+            int intCount = 1;
             //SQL発行
             strSQL = "";
             strSQL += "SELECT ";
             strSQL += " COALESCE(MAX(部品消費登録NO), 0) AS 部品消費登録NO ";
             strSQL += "FROM ";
             strSQL += " PARTS_CONSUME_HISTORY_TBL ";
-            //SQL実行
-            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-            cd.Transaction = tran;
-            dtReader = cd.ExecuteReader();
-            if (dtReader.HasRows){
-                if (dtReader.Read()) { strCount = dtReader["部品消費登録NO"].ToString(); }
-                int.TryParse(strCount, out intCount);
-                intCount += 1;
-                dtReader.Close();
-                return intCount;
-            }else{
-                //ありえないが、１をかえす
-                dtReader.Close();
-                intCount = 1;
-                return intCount;
 
+            try{
+                //SQL実行
+                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                //CTCommon.DBConnect.cn.Open();
+                cd.Transaction = tran;
+                dtReader = cd.ExecuteReader();
+                if (dtReader.HasRows)
+                {
+                    if (dtReader.Read()) { strCount = dtReader["部品消費登録NO"].ToString(); }
+                    int.TryParse(strCount, out intCount);
+                    intCount += 1;
+                    dtReader.Close();
+                    return intCount;
+                }else{
+                    //ありえないが、１をかえす
+                    dtReader.Close();
+                    return intCount;
+                }
+            }catch (Exception e){
+                MessageBox.Show(e.Message);
+                return intCount;
+            }finally{
+                //CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
             }
+
+
         }
 
         //////////////////////////////////////////////////
         //部品登録テーブル 残数取得処理                 //
         //////////////////////////////////////////////////
-        public int Submit_PartsTBLReNumber(SqlTransaction tran, string strPartsNo){
+        //public int Submit_PartsTBLReNumber(SqlTransaction tran, string strPartsNo){
+        public int Submit_PartsTBLReNumber(SqlTransaction tran, string strPartsNo)
+        {
             //変数定義
             SqlCommand cd = null;
             SqlDataReader dtReader;
@@ -168,15 +195,27 @@ namespace CT012_製品生産画面
             strSQL += " PARTS_TBL ";
             strSQL += "WHERE ";
             strSQL += " 部品登録NO = " + strPartsNo + " ";
-            //SQL実行
-            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-            cd.Transaction = tran;
-            dtReader = cd.ExecuteReader();
-            if (dtReader.Read()) { strCount = dtReader["登録数"].ToString(); }
-            dtReader.Close();
-            //文字列→数値変換
-            int.TryParse(strCount, out intCount);
-            return intCount;
+
+            try{
+                
+                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                //CTCommon.DBConnect.cn.Open();
+                cd.Transaction = tran;
+                dtReader = cd.ExecuteReader();
+                if (dtReader.Read()) { strCount = dtReader["登録数"].ToString(); }
+                dtReader.Close();
+                //文字列→数値変換
+                int.TryParse(strCount, out intCount);
+                return intCount;
+
+            }catch (Exception e){
+                MessageBox.Show(e.Message);
+                return intCount;
+            }finally{
+                //CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+            }
+
+
 
         }
 

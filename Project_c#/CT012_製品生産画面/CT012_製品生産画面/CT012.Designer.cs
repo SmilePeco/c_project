@@ -1043,10 +1043,10 @@
         internal System.Windows.Forms.TextBox txtOutputPartsCode2;
         internal System.Windows.Forms.TextBox txtOutputPartsNumber1;
         internal System.Windows.Forms.Label label24;
-        internal System.Windows.Forms.Label lblOutputPartsNo1;
         internal System.Windows.Forms.Label label22;
         internal System.Windows.Forms.Label label21;
         internal System.Windows.Forms.TextBox txtOutputPartsCode1;
+        public System.Windows.Forms.Label lblOutputPartsNo1;
     }
 }
 

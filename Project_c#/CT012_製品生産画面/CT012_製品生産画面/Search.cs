@@ -40,42 +40,44 @@ namespace CT012_製品生産画面
             strSQL += " ON  (A.使用部品コード3 = D.部品コード AND D.部品コード = (SELECT 使用部品コード3 FROM PRODUCT_MS WHERE 製品コード = '" + strProductCode + "' )) ";
             strSQL += "WHERE ";
             strSQL += "    A.製品コード = '" + strProductCode + "' ";
-            //SQL実行
-            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-            CTCommon.DBConnect.cn.Open();
-            dtReader = cd.ExecuteReader();
 
-            //if (dtReader.HasRows || dtReader.Read()){
-            if (dtReader.HasRows){
-                //if (dtReader.Read()){
-                dtReader.Read();
-                for(int i = 1; i <= 3; i++){
-                    PartsCode[i] = dtReader["使用部品コード" + i].ToString().Trim();
-                    PartsName[i] = dtReader["使用部品名" + i].ToString().Trim();
+            try{
+
+                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                CTCommon.DBConnect.cn.Open();
+                dtReader = cd.ExecuteReader();
+
+                if (dtReader.HasRows){
+                    dtReader.Read();
+                    for (int i = 1; i <= 3; i++){
+                        PartsCode[i] = dtReader["使用部品コード" + i].ToString().Trim();
+                        PartsName[i] = dtReader["使用部品名" + i].ToString().Trim();
+                    }
+                    dtReader.Close();
+                    return true;
+                }else{
+                    dtReader.Close();
+                    return false;
                 }
-                //}
 
-                //クローズ処理
-                dtReader.Close();
-                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
-                return true;
-            }else{
-                dtReader.Close();
-                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+            }catch (Exception e){
+                MessageBox.Show(e.Message);
                 return false;
+            }finally{
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
             }
+
+
         }
 
-
+        //////////////////////////////////////////////////
+        //PartsNo検索処理                               //
+        //////////////////////////////////////////////////
         public string Search_OutputPartsNumber(string strPartsNo){
-            //変数定義
             SqlCommand cd = null;
             SqlDataReader dtReader;
             string strReturnValue = "";
-            ////事前処理
-            //PartsNoが空だった場合は、０にする
             if (strPartsNo == "") { strPartsNo = "0"; }
-            //SQL発行
             strSQL = "";
             strSQL += "SELECT ";
             strSQL += " 部品登録NO, ";
@@ -84,22 +86,25 @@ namespace CT012_製品生産画面
             strSQL += " PARTS_TBL ";
             strSQL += "WHERE ";
             strSQL += " 部品登録NO = " + strPartsNo + " ";
-            //SQL実行
-            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-            CTCommon.DBConnect.cn.Open();
-            dtReader = cd.ExecuteReader();
-            if (dtReader.HasRows){
-                if (dtReader.Read()) { strReturnValue = dtReader["登録数"].ToString().Trim(); }
-                //クローズ処理
-                dtReader.Close();
-                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
-                return strReturnValue;
+            try{
+                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                CTCommon.DBConnect.cn.Open();
+                dtReader = cd.ExecuteReader();
+                if (dtReader.HasRows){
+                    if (dtReader.Read()) { strReturnValue = dtReader["登録数"].ToString().Trim(); }
+                    dtReader.Close();
+                    CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                    return strReturnValue;
 
-            }else{
-                //クローズ処理
-                dtReader.Close();
-                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
+                }else{
+                    dtReader.Close();
+                    return strReturnValue;
+                }
+            }catch (Exception e){
+                MessageBox.Show(e.Message);
                 return strReturnValue;
+            }finally{
+                CTCommon.DBConnect.DBConnect_Close(CTCommon.DBConnect.cn);
             }
 
         }

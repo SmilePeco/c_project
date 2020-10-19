@@ -69,48 +69,31 @@ namespace CT012_製品生産画面
             if (sender.Equals(this.btnEnd)) { this.Close(); } //終了処理
 
 
-            //プルリクエスト用：変数定義はメソッドの最初で行う。
-
-            //製品コード検索ボタン押下
+            //【説明】：製品コード検索ボタン押下
             if (sender.Equals(this.btnSearchProductMSSearch)){
-                //変数定義
                 CTCommon.CTProductMSSearch frmSearch = new CTCommon.CTProductMSSearch();
-                 txtSearchProductCode.Text =  frmSearch.Showminiform();
-                //製品名取得
-                 CTCommon.NameSubmit NameSubmit = new CTCommon.NameSubmit();
-                 lblSearchProductName.Text = NameSubmit.ProductName_Submit(txtSearchProductCode.Text);
+                txtSearchProductCode.Text =  frmSearch.Showminiform();
+
+                CTCommon.NameSubmit NameSubmit = new CTCommon.NameSubmit();
+                lblSearchProductName.Text = NameSubmit.ProductName_Submit(txtSearchProductCode.Text);
             }
 
-            //更新担当者ボタン押下
+            //【説明】：更新担当者ボタン押下
             if (sender.Equals(this.btnHumanMSSearch)){
-                //変数定義
                 CTCommon.CTHumanMSSearch frmSearch = new CTCommon.CTHumanMSSearch();
-                txtHumanMSNo.Text = frmSearch.ShowminiForm();
 
+                txtHumanMSNo.Text = frmSearch.ShowminiForm();
             }
 
-            //プルリクエスト用：ここから
-            //検索部品１～３はコピペコードなので、集約する。
-
-            //①まずはボタンの名前を取得する
+            //【説明】：使用部品１～３ボタン押下
             Button btn = sender as Button;
             string ClickButtonName = btn.Name;
-            //string a = "";
-            //int b = 0;
-
-            //②取得したボタン名から→ローカル変数の設定をするような別クラスを作成する
-            //ローカル変数は、strPartsNo1、lblOutputPartsNo1、strPartsNumber1、txtOutputPartsNumber1を設定する必要がある。
-
-            //クリック処理は呼び出すだけにしたい
-            //クリック内部処理は別メソッドに分けた。（メソッド抽出）
 
             if (ClickButtonName == "btnInputPartsMSSearch1" || 
                 ClickButtonName == "btnInputPartsMSSearch2" ||
                 ClickButtonName == "btnInputPartsMSSearch3"){
 
-                    //Button_InputParts(ClickButtonName, ClickButtonName + ".Text", ref a, ref b);
                     Button_InputParts(ClickButtonName);
-
 
             }
 
@@ -184,10 +167,8 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //使用部品検索ボタン　内部処理                  //
         //////////////////////////////////////////////////
-        private void Button_InputParts(string ButtonName)
-        {
+        private void Button_InputParts(string ButtonName){
 
-            //変数定義
             CTCommon.CTPartsNoSearch frmSearch = new CTCommon.CTPartsNoSearch();
             Search Search = new Search();
             string OutputPartsNo;
@@ -339,7 +320,7 @@ namespace CT012_製品生産画面
         //////////////////////////////////////////////////
         //更新前チェック処理                            //
         //////////////////////////////////////////////////
-        private Boolean Submit_Check(){ //プルリクエスト用：CT012_Submit_Checkとする
+        private Boolean CT012_Submit_Check(){ //プルリクエスト用：CT012_Submit_Checkとする
             //変数定義
             CTCommon.ValueCheck ValueCheck = new CTCommon.ValueCheck();
             Check Check = new Check();
@@ -391,7 +372,7 @@ namespace CT012_製品生産画面
                 if (txtPartsNumber[i] == "") { OutputParts[i] = 0; } else { OutputParts[i] = Convert.ToInt32(txtPartsNumber[i]); }
             }
 
-            //【説明】:入力生産数＞使用数の確認をする。
+            //【説明】:入力生産数＞使用数だった場合はエラーとする。
             var lblPartsNo = new string[] { lblOutputPartsNo1.Text, lblOutputPartsNo2.Text, lblOutputPartsNo3.Text };
 
             if (false == Check.OuputValues(OutputConsume, lblPartsNo, OutputParts))
@@ -442,7 +423,10 @@ namespace CT012_製品生産画面
             Submit Submit = new Submit();
             SqlTransaction tran = null;
             SqlCommand cd = null;
-            string strSQL;
+            string strSQL = "";
+            string[] SQL_DeleteJudge = new string[3];
+            int[] SQL_HISTORYTBL_MaxNo = new int[3];
+            int[] SQL_HISTORYTBL_ReNumber = new int[3];
 
             //フォーカスを外す
             this.ActiveControl = null;
@@ -450,56 +434,85 @@ namespace CT012_製品生産画面
             //確認メッセージ
             if (MessageBox.Show("登録しますか？", "登録確認", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes){
                 //チェック処理
-                if (true == Submit_Check()){
+                if (true == CT012_Submit_Check()){
                     try{
-
                         //プルリクエスト用：ここから
                         //コメントが多すぎる。全体的な見直しが必要。
-                        
-                        /////////////////////////
-                        //トランザクション開始//
-                        /////////////////////////
+
+                        //事前に削除かそれ以外かを判定しておく。
+
+                        //今回はリファクタリングなので、影響のない範囲で改修を行う
                         CTCommon.DBConnect.cn.Open();
                         tran = CTCommon.DBConnect.cn.BeginTransaction();
-                        ////PARTS_TBL、PARTS_CONSUME_HISTORY_TBL////
-                        //使用部品１の計算（使用部品が空欄の場合は計算しない）
+
                         if (txtOutputPartsCode1.Text.Trim() != ""){
-                            ////PARTS_TBL、PARTS_HISTORY_TBL////
-                            //SQL発行
-                            strSQL = Submit.Submit_Calc_PartsTBL(tran, lblOutputPartsNo1.Text, lblOutputConsumeNumber1.Text);
-                            //計算結果が、削除処理か判定する
-                            if (strSQL != "DELETE"){
-                                //DELETE指示以外は通常とおりに更新処理
+
+                            T012_Submit_Prep_PartsNo1(tran, ref SQL_DeleteJudge);
+
+                            if (SQL_DeleteJudge[0] == "DELETE"){
+                                //【説明】：使用数＞PARTS_TBLの登録数の場合は、DELETE処理
+                                strSQL = Submit.DELETE_PARTS_TBL(lblOutputPartsNo1.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
+                                cd.Transaction = tran;
+                                cd.ExecuteNonQuery();
+
+                                strSQL = Submit.DELETE_PARTS_HISTORY_TBL(lblOutputPartsNo1.Text);
+                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
                             }else{
-                                ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
-                                //TABLE_TBL 削除SQL生成
-                                strSQL = Submit.Submit_PartsTBLDelete(lblOutputPartsNo1.Text);
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
-                                cd.Transaction = tran;
-                                cd.ExecuteNonQuery();
-
-                                //TABLE_HISTORY_TBL 削除SQL生成
-                                strSQL = Submit.Submit_PartsHistoryTBLDelete(lblOutputPartsNo1.Text);
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
+                                //【説明】：使用数＜PARTS_TBLの登録数の場合は、登録数の引き算
+                                cd = new SqlCommand(SQL_DeleteJudge[0], CTCommon.DBConnect.cn);
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
                             }
 
 
-                            ////PARTS_CONSUME_HISTORY_TBL////
-                            //部品消費履歴マスタのMAX値、残数の取得
-                            int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
-                            int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo1.Text);
-                            //SQL発行
-                            strSQL = Submit.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo1.Text.Trim(), txtOutputPartsCode1.Text.Trim(), intReNumber, lblOutputConsumeNumber1.Text.Trim(), txtHumanMSNo.Text.Trim());
+                            //strSQL = Submit.JUDGE_PARTS_TBL(lblOutputPartsNo1.Text, lblOutputConsumeNumber1.Text);
+                            //if (strSQL != "DELETE")
+                            //{
+                            //    //DELETE指示以外は通常とおりに更新処理
+                            //    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                            //    //更新処理
+                            //    cd.Transaction = tran;
+                            //    cd.ExecuteNonQuery();
+
+                            //}
+                            //else
+                            //{
+                            //    ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
+                            //    //TABLE_TBL 削除SQL生成
+                            //    strSQL = Submit.Submit_PartsTBLDelete(lblOutputPartsNo1.Text);
+                            //    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                            //    cd.Transaction = tran;
+                            //    cd.ExecuteNonQuery();
+
+                            //    //TABLE_HISTORY_TBL 削除SQL生成
+                            //    strSQL = Submit.Submit_PartsHistoryTBLDelete(lblOutputPartsNo1.Text);
+                            //    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                            //    cd.Transaction = tran;
+                            //    cd.ExecuteNonQuery();
+
+                            //}
+
+
+                            //////////////////PARTS_CONSUME_HISTORY_TBL////
+                            ////////////////部品消費履歴マスタのMAX値、残数の取得
+                            ////////////////int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
+                            ////////////////int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo1.Text);
+                            
+                            
+                            
+                            
+                            ////SQL発行
+                            string[] ConsumeParts = new string[] { lblOutputPartsNo1.Text.Trim(), txtOutputPartsCode1.Text.Trim() };
+                            string[] OthersName = new string[] { lblOutputConsumeNumber1.Text.Trim(), txtHumanMSNo.Text.Trim() };
+
+                            T012_Submit_After_PartsNo1(tran, ref SQL_HISTORYTBL_MaxNo, ref SQL_HISTORYTBL_ReNumber);
+
+                            strSQL = Submit.INSERT_PARTS_CONSUME_HISTORY_TBL(tran, SQL_HISTORYTBL_MaxNo[1], ConsumeParts, SQL_HISTORYTBL_ReNumber[1], OthersName);
                             cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                             //更新処理
                             cd.Transaction = tran;
@@ -507,96 +520,179 @@ namespace CT012_製品生産画面
                         }
 
 
-                        //使用部品２の計算（使用部品が空欄の場合は計算しない）
-                        if (txtOutputPartsCode2.Text.Trim() != ""){
-                            ////PARTS_TBL////
-                            //SQL発行
-                            strSQL = Submit.Submit_Calc_PartsTBL(tran, lblOutputPartsNo2.Text, lblOutputConsumeNumber2.Text);
-                            //計算結果が、削除処理か判定する
-                            if (strSQL != "DELETE")
+                        if (txtOutputPartsCode2.Text.Trim() != "")
+                        {
+                            T012_Submit_Prep_PartsNo2(tran, ref SQL_DeleteJudge);
+
+
+                            if (SQL_DeleteJudge[0] == "DELETE"){
+                                //【説明】：使用数＞PARTS_TBLの登録数の場合は、DELETE処理
+                                strSQL = Submit.DELETE_PARTS_TBL(lblOutputPartsNo1.Text);
+                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                                cd.Transaction = tran;
+                                cd.ExecuteNonQuery();
+
+                                strSQL = Submit.DELETE_PARTS_HISTORY_TBL(lblOutputPartsNo1.Text);
+                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                                cd.Transaction = tran;
+                                cd.ExecuteNonQuery();
+
+                            }else{
+                                //【説明】：使用数＜PARTS_TBLの登録数の場合は、登録数の引き算
+                                cd = new SqlCommand(SQL_DeleteJudge[1], CTCommon.DBConnect.cn);
+                                cd.Transaction = tran;
+                                cd.ExecuteNonQuery();
+
+                            }
+
+                            string[] ConsumeParts = new string[] { lblOutputPartsNo1.Text.Trim(), txtOutputPartsCode1.Text.Trim() };
+                            string[] OthersName = new string[] { lblOutputConsumeNumber1.Text.Trim(), txtHumanMSNo.Text.Trim() };
+
+                            T012_Submit_After_PartsNo2(tran, ref SQL_HISTORYTBL_MaxNo, ref SQL_HISTORYTBL_ReNumber);
+
+                            strSQL = Submit.INSERT_PARTS_CONSUME_HISTORY_TBL(tran, SQL_HISTORYTBL_MaxNo[1], ConsumeParts,  SQL_HISTORYTBL_ReNumber[1], OthersName);
+                            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                            //更新処理
+                            cd.Transaction = tran;
+                            cd.ExecuteNonQuery();
+                        }
+
+
+
+                        ////使用部品２の計算（使用部品が空欄の場合は計算しない）
+                        //if (txtOutputPartsCode2.Text.Trim() != ""){
+                        //    ////PARTS_TBL////
+                        //    //SQL発行
+                        //    //strSQL = Submit.JUDGE_PARTS_TBL(tran, lblOutputPartsNo2.Text, lblOutputConsumeNumber2.Text);
+                        //    //計算結果が、削除処理か判定する
+                        //    if (strSQL != "DELETE")
+                        //    {
+                        //        //DELETE指示以外は通常とおりに更新処理
+                        //        cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                        //        //更新処理
+                        //        cd.Transaction = tran;
+                        //        cd.ExecuteNonQuery();
+
+                        //    }else{
+                        //        ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
+                        //        //TABLE_TBL 削除SQL生成
+                        //        strSQL = Submit.DELETE_PARTS_TBL(lblOutputPartsNo2.Text);
+                        //        cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                        //        //更新処理
+                        //        cd.Transaction = tran;
+                        //        cd.ExecuteNonQuery();
+
+                        //        //TABLE_HISTORY_TBL 削除SQL生成
+                        //        strSQL = Submit.DELETE_PARTS_HISTORY_TBL(lblOutputPartsNo2.Text);
+                        //        cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                        //        //更新処理
+                        //        cd.Transaction = tran;
+                        //        cd.ExecuteNonQuery();
+                        //    }
+                        //                                ////PARTS_CONSUME_HISTORY_TBL////
+                        //    //部品消費履歴マスタのMAX値、消費残数の取得
+                        //    //int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
+                        //    //int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo2.Text);
+                        //    //SQL発行
+                        //    //strSQL = Submit.INSERT_PARTS_CONSUME_HISTORY_TBL(tran, intConsumeNo, lblOutputPartsNo2.Text.Trim(), txtOutputPartsCode2.Text.Trim(), intReNumber, lblOutputConsumeNumber2.Text.Trim(), txtHumanMSNo.Text.Trim());
+                        //    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                        //    //更新処理
+                        //    cd.Transaction = tran;
+                        //    cd.ExecuteNonQuery();
+                        //}
+
+                        if (txtOutputPartsCode2.Text.Trim() != "")
+                        {
+                            T012_Submit_Prep_PartsNo2(tran, ref SQL_DeleteJudge);
+
+
+                            if (SQL_DeleteJudge[0] == "DELETE")
                             {
-                                //DELETE指示以外は通常とおりに更新処理
+                                //【説明】：使用数＞PARTS_TBLの登録数の場合は、DELETE処理
+                                strSQL = Submit.DELETE_PARTS_TBL(lblOutputPartsNo1.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
-                            }else{
-                                ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
-                                //TABLE_TBL 削除SQL生成
-                                strSQL = Submit.Submit_PartsTBLDelete(lblOutputPartsNo2.Text);
+                                strSQL = Submit.DELETE_PARTS_HISTORY_TBL(lblOutputPartsNo1.Text);
                                 cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
-                                //TABLE_HISTORY_TBL 削除SQL生成
-                                strSQL = Submit.Submit_PartsHistoryTBLDelete(lblOutputPartsNo2.Text);
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
-                                cd.Transaction = tran;
-                                cd.ExecuteNonQuery();
                             }
-
-
-
-
-
-                            ////PARTS_CONSUME_HISTORY_TBL////
-                            //部品消費履歴マスタのMAX値、消費残数の取得
-                            int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
-                            int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo2.Text);
-                            //SQL発行
-                            strSQL = Submit.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo2.Text.Trim(), txtOutputPartsCode2.Text.Trim(), intReNumber, lblOutputConsumeNumber2.Text.Trim(), txtHumanMSNo.Text.Trim());
-                            cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                            //更新処理
-                            cd.Transaction = tran;
-                            cd.ExecuteNonQuery();
-                        }
-
-
-
-                        //使用部品３の計算（使用部品が空欄の場合は計算しない）
-                        if (txtOutputPartsCode3.Text.Trim() != ""){
-                            //SQL発行
-                            strSQL = Submit.Submit_Calc_PartsTBL(tran, lblOutputPartsNo3.Text, lblOutputConsumeNumber3.Text);
-                            //計算結果が、削除処理か判定する
-                            if (strSQL != "DELETE")
+                            else
                             {
-                                //DELETE指示以外は通常とおりに更新処理
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
+                                //【説明】：使用数＜PARTS_TBLの登録数の場合は、登録数の引き算
+                                cd = new SqlCommand(SQL_DeleteJudge[1], CTCommon.DBConnect.cn);
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
-                            }else{
-                                ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
-                                //TABLE_TBL 削除SQL生成
-                                strSQL = Submit.Submit_PartsTBLDelete(lblOutputPartsNo3.Text);
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
-                                cd.Transaction = tran;
-                                cd.ExecuteNonQuery();
-
-                                //TABLE_HISTORY_TBL 削除SQL生成
-                                strSQL = Submit.Submit_PartsHistoryTBLDelete(lblOutputPartsNo3.Text);
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
-                                //更新処理
-                                cd.Transaction = tran;
-                                cd.ExecuteNonQuery();
                             }
 
-                            ////PARTS_CONSUME_HISTORY_TBL////
-                            //部品消費履歴マスタのMAX値、残数の取得
-                            int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
-                            int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo3.Text);
-                            //SQL発行
-                            strSQL = Submit.Submit_PartsConsume(tran, intConsumeNo, lblOutputPartsNo3.Text.Trim(), txtOutputPartsCode3.Text.Trim(), intReNumber, lblOutputConsumeNumber3.Text.Trim(), txtHumanMSNo.Text.Trim());
+                            string[] ConsumeParts = new string[] { lblOutputPartsNo1.Text.Trim(), txtOutputPartsCode1.Text.Trim() };
+                            string[] OthersName = new string[] { lblOutputConsumeNumber1.Text.Trim(), txtHumanMSNo.Text.Trim() };
+
+                            T012_Submit_After_PartsNo2(tran, ref SQL_HISTORYTBL_MaxNo, ref SQL_HISTORYTBL_ReNumber);
+
+                            strSQL = Submit.INSERT_PARTS_CONSUME_HISTORY_TBL(tran, SQL_HISTORYTBL_MaxNo[1], ConsumeParts, SQL_HISTORYTBL_ReNumber[1], OthersName);
                             cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
                             //更新処理
                             cd.Transaction = tran;
                             cd.ExecuteNonQuery();
                         }
+
+
+
+
+
+
+                        ////使用部品３の計算（使用部品が空欄の場合は計算しない）
+                        //if (txtOutputPartsCode3.Text.Trim() != ""){
+                        //    //SQL発行
+                        //    //strSQL = Submit.JUDGE_PARTS_TBL(tran, lblOutputPartsNo3.Text, lblOutputConsumeNumber3.Text);
+                        //    //計算結果が、削除処理か判定する
+                        //    if (strSQL != "DELETE")
+                        //    {
+                        //        //DELETE指示以外は通常とおりに更新処理
+                        //        cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                        //        //更新処理
+                        //        cd.Transaction = tran;
+                        //        cd.ExecuteNonQuery();
+
+                        //    }else{
+                        //        ////削除処理の場合はTABLE_TBL、TABLE_HISTORY_TBL の削除SQLを生成する
+                        //        //TABLE_TBL 削除SQL生成
+                        //        strSQL = Submit.DELETE_PARTS_TBL(lblOutputPartsNo3.Text);
+                        //        cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                        //        //更新処理
+                        //        cd.Transaction = tran;
+                        //        cd.ExecuteNonQuery();
+
+                        //        //TABLE_HISTORY_TBL 削除SQL生成
+                        //        strSQL = Submit.DELETE_PARTS_HISTORY_TBL(lblOutputPartsNo3.Text);
+                        //        cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                        //        //更新処理
+                        //        cd.Transaction = tran;
+                        //        cd.ExecuteNonQuery();
+                        //    }
+
+                        //    ////PARTS_CONSUME_HISTORY_TBL////
+                        //    //部品消費履歴マスタのMAX値、残数の取得
+                        //    //int intConsumeNo = Submit.Submit_PartsConsumeMAX(tran);
+                        //    //int intReNumber = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo3.Text);
+                        //    //SQL発行
+                        //    //strSQL = Submit.INSERT_PARTS_CONSUME_HISTORY_TBL(tran, intConsumeNo, lblOutputPartsNo3.Text.Trim(), txtOutputPartsCode3.Text.Trim(), intReNumber, lblOutputConsumeNumber3.Text.Trim(), txtHumanMSNo.Text.Trim());
+                        //    cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                        //    //更新処理
+                        //    cd.Transaction = tran;
+                        //    cd.ExecuteNonQuery();
+                        //}
+
+
+
+
+
+
 
                         ////PRODUCT_TBL、PRODUCT_HISTORY_TBL////
                         //PRODUCT_TBL
@@ -662,6 +758,92 @@ namespace CT012_製品生産画面
             }
 
         }
+
+
+        //////////////////////////////////////////////////
+        //更新事前処理  部品コード１                    //
+        //////////////////////////////////////////////////
+        private void T012_Submit_Prep_PartsNo1(SqlTransaction tran, ref string[] SQL_DeleteJudge) {
+
+            Submit Submit = new Submit();
+
+            if (txtOutputPartsCode1.Text.Trim() != ""){
+                SQL_DeleteJudge[0] = Submit.JUDGE_PARTS_TBL(tran, lblOutputPartsNo1.Text, lblOutputConsumeNumber1.Text);
+            }
+        }
+
+        //////////////////////////////////////////////////
+        //更新事前処理  部品コード２                    //
+        //////////////////////////////////////////////////
+        private void T012_Submit_Prep_PartsNo2(SqlTransaction tran, ref string[] SQL_DeleteJudge){
+
+            Submit Submit = new Submit();
+
+            if (txtOutputPartsCode2.Text.Trim() != ""){
+                SQL_DeleteJudge[1] = Submit.JUDGE_PARTS_TBL(tran, lblOutputPartsNo2.Text, lblOutputConsumeNumber2.Text);
+            }
+        }
+
+        //////////////////////////////////////////////////
+        //更新事前処理  部品コード３                    //
+        //////////////////////////////////////////////////
+        private void T012_Submit_Prep_PartsNo3(SqlTransaction tran, ref string[] SQL_DeleteJudge){
+
+            Submit Submit = new Submit();
+
+            if (txtOutputPartsCode3.Text.Trim() != ""){
+                SQL_DeleteJudge[2] = Submit.JUDGE_PARTS_TBL(tran, lblOutputPartsNo3.Text, lblOutputConsumeNumber3.Text);
+            }
+        }
+
+        //////////////////////////////////////////////////
+        //更新事後処理  部品コード１                    //
+        //////////////////////////////////////////////////
+        private void T012_Submit_After_PartsNo1(SqlTransaction tran, ref int[] SQL_HISTORYTBL_MaxNo, ref int[] SQL_HISTORYTBL_ReNumber){
+
+            Submit Submit = new Submit();
+            
+            if (txtOutputPartsCode1.Text.Trim() != ""){
+                SQL_HISTORYTBL_MaxNo[0] = Submit.Submit_PartsConsumeMAX(tran);
+                SQL_HISTORYTBL_ReNumber[0] = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo1.Text);
+
+            }
+        }
+            
+
+        //////////////////////////////////////////////////
+        //更新事後処理  部品コード２                    //
+        //////////////////////////////////////////////////
+        private void T012_Submit_After_PartsNo2(SqlTransaction tran, ref int[] SQL_HISTORYTBL_MaxNo, ref int[] SQL_HISTORYTBL_ReNumber){
+
+            Submit Submit = new Submit();
+
+            if (txtOutputPartsCode2.Text.Trim() != ""){
+                SQL_HISTORYTBL_MaxNo[1] = Submit.Submit_PartsConsumeMAX(tran);
+                SQL_HISTORYTBL_ReNumber[1] = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo2.Text);
+
+            }
+
+        }
+
+        //////////////////////////////////////////////////
+        //更新事後処理  部品コード３                    //
+        //////////////////////////////////////////////////
+        private void T012_Submit_After_PartsNo3(SqlTransaction tran, ref int[] SQL_HISTORYTBL_MaxNo, ref int[] SQL_HISTORYTBL_ReNumber){
+
+            Submit Submit = new Submit();
+
+            if (txtOutputPartsCode3.Text.Trim() != ""){
+                SQL_HISTORYTBL_MaxNo[2] = Submit.Submit_PartsConsumeMAX(tran);
+                SQL_HISTORYTBL_ReNumber[2] = Submit.Submit_PartsTBLReNumber(tran, lblOutputPartsNo3.Text);
+
+            }
+
+        }
+
+
+
+
 
         //////////////////////////////////////////////////
         //クリア処理                                    //
