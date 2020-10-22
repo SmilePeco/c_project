@@ -17,6 +17,7 @@ namespace CTCommon
     {
 
         public static SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["NAKADB"].ConnectionString);
+        public static SqlConnection cn_test = new SqlConnection(ConfigurationManager.ConnectionStrings["NAKADBTEST"].ConnectionString);
         public static SqlCommand cd = null;
 
 

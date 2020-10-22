@@ -233,14 +233,21 @@ namespace CT012_製品生産画面
             if (false == ValueCheck.Check_HumanMS(txtHumanMSNo.Text.Trim())) { MessageBox.Show("入力した更新担当者は存在しません。 \r\n確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
 
             //【説明】:ラベル値→数値の変換をする。
+            CTCommon.ValueConversion ValueConversion = new CTCommon.ValueConversion();
+            int OutputConsume1 = ValueConversion.IntFromString(lblOutputConsumeNumber1.Text);
+
+
             var lblConsumeNumber = new string[] { lblOutputConsumeNumber1.Text, lblOutputConsumeNumber2.Text, lblOutputConsumeNumber3.Text };
             var txtPartsNumber = new string[] { txtOutputPartsNumber1.Text, txtOutputPartsNumber2.Text, txtOutputPartsNumber3.Text };
             int[] OutputConsume = new int[3];
             int[] OutputParts = new int[3];
 
-            for (int i = 0; i <= 2; i++){
-                if (lblConsumeNumber[i] == "") { OutputConsume[i] = 0; } else { OutputConsume[i] = Convert.ToInt32(lblConsumeNumber[i]); }
-                if (txtPartsNumber[i] == "") { OutputParts[i] = 0; } else { OutputParts[i] = Convert.ToInt32(txtPartsNumber[i]); }
+            for (int i = 0; i <= 2; i++) {
+                OutputConsume[i] = ValueConversion.IntFromString(lblConsumeNumber[i]);
+                OutputParts[i] = ValueConversion.IntFromString(txtPartsNumber[i]);
+
+                //if (lblConsumeNumber[i] == "") { OutputConsume[i] = 0; } else { OutputConsume[i] = Convert.ToInt32(lblConsumeNumber[i]); }
+                //if (txtPartsNumber[i] == "") { OutputParts[i] = 0; } else { OutputParts[i] = Convert.ToInt32(txtPartsNumber[i]); }
             }
 
             //【説明】:入力生産数＞使用数だった場合はエラーとする。
@@ -284,19 +291,21 @@ namespace CT012_製品生産画面
 
                             if (SQL_DeleteJudge[0] == "DELETE"){
                                 //【説明】：使用数＞PARTS_TBLの登録数の場合は、DELETE処理
+                                LocalConnect LocalConnect = new LocalConnect();
                                 strSQL = Submit.DELETE_PARTS_TBL(lblOutputPartsNo1.Text);
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                                cd = LocalConnect.SqlCommand(strSQL);
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
                                 strSQL = Submit.DELETE_PARTS_HISTORY_TBL(lblOutputPartsNo1.Text);
-                                cd = new SqlCommand(strSQL, CTCommon.DBConnect.cn);
+                                cd = LocalConnect.SqlCommand(strSQL);
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
                             }else{
                                 //【説明】：使用数＜PARTS_TBLの登録数の場合は、登録数の引き算
-                                cd = new SqlCommand(SQL_DeleteJudge[0], CTCommon.DBConnect.cn);
+                                LocalConnect LocalConnect = new LocalConnect();
+                                cd = LocalConnect.SqlCommand(SQL_DeleteJudge[0]);
                                 cd.Transaction = tran;
                                 cd.ExecuteNonQuery();
 
