@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT012_製品生産画面", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTCommon", "..\CTCommon\CTCommon\CTCommon.csproj", "{EC0AE112-FB43-4BBA-BE30-545DCF38855A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyUnitTest", "MyUnitTest\MyUnitTest.csproj", "{36BBF40E-327F-4AD7-8AB7-C680DD902F97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EC0AE112-FB43-4BBA-BE30-545DCF38855A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC0AE112-FB43-4BBA-BE30-545DCF38855A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC0AE112-FB43-4BBA-BE30-545DCF38855A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36BBF40E-327F-4AD7-8AB7-C680DD902F97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36BBF40E-327F-4AD7-8AB7-C680DD902F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36BBF40E-327F-4AD7-8AB7-C680DD902F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36BBF40E-327F-4AD7-8AB7-C680DD902F97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
